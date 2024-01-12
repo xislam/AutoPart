@@ -10,13 +10,13 @@ from accounts.models import User
 class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     list_display = (
-        'full_name', 'phone_number', 'role', 'email')
-    list_display_links = ('full_name', 'phone_number', 'role')
-    list_filter = ('full_name', 'phone_number', 'role')
+        'name', 'surname', 'phone_number', 'role', 'email')
+    list_display_links = ('name', 'surname', 'phone_number', 'role')
+    list_filter = ('name', 'surname', 'phone_number', 'role')
 
     fieldsets = (
         (None, {'fields': (
-            'full_name', 'password', 'email', 'photo',)}),
+            'name', 'surname', 'password', 'email', 'photo',)}),
         ('Contact Information', {'fields': ('phone_number',)}),  # Оставьте только 'phone_number' здесь
         ('Permissions', {'fields': ('is_staff', 'is_active',
                                     'is_superuser', 'groups', 'user_permissions')}),
@@ -26,12 +26,12 @@ class CustomUserAdmin(UserAdmin):
         (None, {
             'classes': ('wide',),
             'fields': (
-                'full_name', 'email', 'phone_number', 'password1', 'password2', 'role',  'is_staff',
+                'name', 'surname', 'email', 'phone_number', 'password1', 'password2', 'role', 'is_staff',
                 'is_active', 'is_superuser',)}
          ),
     )
-    search_fields = ('full_name', 'phone_number',)
-    ordering = ('full_name',)
+    search_fields = ('name', 'surname', 'phone_number',)
+    ordering = ('name', 'surname',)
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
