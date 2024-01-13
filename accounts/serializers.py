@@ -17,3 +17,8 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 class UserLoginSerializer(serializers.Serializer):
     identifier = serializers.CharField()
     password = serializers.CharField(write_only=True)
+
+
+class PasswordResetSerializer(serializers.Serializer):
+    phone_number = serializers.CharField(max_length=255, required=False)
+    email = serializers.EmailField(required=False)

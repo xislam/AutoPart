@@ -1,12 +1,13 @@
+from django.core.mail import send_mail
 from django.db.models import Q
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import generics, permissions, status
-from django.contrib.auth import get_user_model
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from .models import User
-from .serializers import UserRegistrationSerializer, UserLoginSerializer
+from .serializers import UserRegistrationSerializer, UserLoginSerializer, PasswordResetSerializer
 
 
 class RegistrationAPIView(generics.CreateAPIView):
@@ -59,3 +60,45 @@ class UserLoginAPIView(generics.CreateAPIView):
             return Response(data, status=status.HTTP_200_OK)
         else:
             return Response({'detail': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+
+
+class CustomPasswordResetView(APIView):
+    def post(self, request, *args, **kwargs):
+        serializer = PasswordResetSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        phone_number = serializer.validated_data.get('phone_number')
+        email = serializer.validated_data.get('email')
+
+        # Проверка, предоставлен ли номер телефона или адрес электронной почты
+        if not phone_number and not email:
+            return Response({'detail': 'Укажите либо номер телефона, либо адрес электронной почты для сброса пароля.'},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        # Поиск пользователя по номеру телефона или адресу электронной почты
+        user = None
+        if phone_number:
+            user = User.objects.filter(phone_number=phone_number).first()
+        elif email:
+            user = User.objects.filter(email=email).first()
+
+        if not user:
+            return Response({'detail': 'Пользователь не найден.'}, status=status.HTTP_404_NOT_FOUND)
+
+        # Генерация нового пароля (больше восьми символов)
+        new_password = User.objects.make_random_password(length=12)  # Пример: генерация пароля длиной 12 символов
+
+        # Установка нового пароля для пользователя
+        user.set_password(new_password)
+        user.save()
+
+        send_mail(
+            'Сброс пароля',
+            f'Ваш новый пароль: {new_password}',
+            'test.tset@internet.ru',  # Отправитель (ваша почта на mail.ru)
+            [user.email],  # Получатель (адрес электронной почты пользователя)
+            fail_silently=False,
+        )
+
+        return Response({'detail': 'Сброс пароля прошел успешно. Новый пароль отправлен на вашу электронную почту.'},
+                        status=status.HTTP_200_OK)

@@ -16,7 +16,7 @@ class CustomUserAdmin(UserAdmin):
 
     fieldsets = (
         (None, {'fields': (
-            'name', 'surname', 'password', 'email', 'photo',)}),
+            'name', 'surname', 'password', 'email',)}),
         ('Contact Information', {'fields': ('phone_number',)}),  # Оставьте только 'phone_number' здесь
         ('Permissions', {'fields': ('is_staff', 'is_active',
                                     'is_superuser', 'groups', 'user_permissions')}),
