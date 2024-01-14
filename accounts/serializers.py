@@ -29,7 +29,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'phone_number', 'name', 'surname', 'email', 'birthday', 'password']
+        fields = ['phone_number', 'name', 'surname', 'email', 'birthday', 'password']
 
     def update(self, instance, validated_data):
         # Update other fields
