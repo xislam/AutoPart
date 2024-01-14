@@ -3,7 +3,7 @@ from django.contrib import admin
 # Register your models here.
 from rangefilter.filters import DateRangeFilter
 
-from products.models import CarName, CarMake, Product, ExchangeRates
+from products.models import CarName, CarMake, Product, ExchangeRates, Category
 
 
 class CarMakeAdmin(admin.ModelAdmin):
@@ -56,3 +56,4 @@ class ProductAdmin(admin.ModelAdmin):
 
 admin.site.register(Product, ProductAdmin)
 admin.site.register(ExchangeRates)
+admin.site.register(Category)
