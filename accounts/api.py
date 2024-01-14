@@ -2,12 +2,15 @@ from django.core.mail import send_mail
 from django.db.models import Q
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import generics, permissions, status
+from rest_framework.generics import RetrieveUpdateAPIView
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from .models import User
-from .serializers import UserRegistrationSerializer, UserLoginSerializer, PasswordResetSerializer
+from .models import User, FavoriteProduct
+from .serializers import UserRegistrationSerializer, UserLoginSerializer, PasswordResetSerializer, UserSerializer, \
+    FavoriteProductSerializer, FavoriteProductListSerializer
 
 
 class RegistrationAPIView(generics.CreateAPIView):
@@ -105,4 +108,33 @@ class CustomPasswordResetView(APIView):
                         status=status.HTTP_200_OK)
 
 
+class UserUpdateView(RetrieveUpdateAPIView):
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
 
+    def get_object(self):
+        # Retrieve the user associated with the JWT token
+        return self.request.user
+
+
+class FavoriteProductListCreateView(generics.CreateAPIView):
+    serializer_class = FavoriteProductSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        # Return the favorite products of the authenticated user
+        return FavoriteProduct.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        # Set the user to the authenticated user before saving the favorite product
+        serializer.save(user=self.request.user)
+
+
+class FavoriteProductListView(generics.ListAPIView):
+    serializer_class = FavoriteProductListSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        # Retrieve the favorite products for the authenticated user
+        user = self.request.user
+        return FavoriteProduct.objects.filter(user=user)
