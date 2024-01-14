@@ -23,6 +23,9 @@ class CarMake(models.Model):
     make = models.CharField(verbose_name='Марка', max_length=125)
     create_date = models.DateTimeField(auto_created=True, verbose_name='Это создание')
 
+    def __str__(self):
+        return self.make
+
     class Meta:
         verbose_name = 'Марка машины'
         verbose_name_plural = 'Марка машины'
