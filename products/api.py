@@ -1,10 +1,11 @@
-from django.db.models import Count
+from django.db.models import Count, Subquery, OuterRef
 from django.db.models.functions import Concat
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics, status
 from rest_framework.response import Response
 from django.db.models import Count, Value, CharField
 
+from basket.models import Order
 from .models import Product, CarMake, CarName
 from .serializers import ProductSerializer, CarMakeSerializer, CarNameSerializer
 
@@ -24,7 +25,9 @@ class ProductFilter(django_filters.FilterSet):
 
 
 class ProductListView(generics.ListAPIView):
-    queryset = Product.objects.all()
+    queryset = Product.objects.exclude(
+        id__in=Subquery(Order.objects.filter(product=OuterRef('id')).values('product'))
+    )
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = ProductFilter
