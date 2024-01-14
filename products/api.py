@@ -16,14 +16,21 @@ class ProductFilter(django_filters.FilterSet):
     model_year__gte = django_filters.NumberFilter(field_name='model_year', lookup_expr='gte')
     model_year__lte = django_filters.NumberFilter(field_name='model_year', lookup_expr='lte')
     category = django_filters.CharFilter(field_name='category__name', lookup_expr='icontains')
+    name_product = django_filters.CharFilter(method='filter_name_product')
 
     class Meta:
         model = Product
         fields = {
-            'name_product': ['icontains'],
             'car_info__car_name': ['icontains'],
-
         }
+
+    def filter_name_product(self, queryset, name_product, value):
+        names = value.split(',')  # Split the input into a list of names
+        filters = [django_filters.filters.Q(name_product__icontains=name) for name in names]
+        combined_filters = filters.pop()
+        for f in filters:
+            combined_filters |= f
+        return queryset.filter(combined_filters)
 
 
 class ProductListView(generics.ListAPIView):
