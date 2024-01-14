@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from products.models import CarMake, CarName, Product
+from products.models import CarMake, CarName, Product, Category
 
 
 class CarMakeSerializer(serializers.ModelSerializer):
@@ -33,3 +33,9 @@ class ProductWithCountSerializer(serializers.Serializer):
     def to_representation(self, instance):
         data = super().to_representation(instance)
         return data
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = '__all__'

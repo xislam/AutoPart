@@ -41,7 +41,19 @@ class CarName(models.Model):
         verbose_name = 'Наименование машины'
 
 
+class Category(models.Model):
+    name = models.CharField(max_length=250, verbose_name='Наименование категории')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Категория'
+        verbose_name_plural = 'Категории'
+
+
 class Product(models.Model):
+    category = models.ForeignKey(Category, verbose_name='Категория', on_delete=models.CASCADE, null=True, blank=True)
     fotos = models.JSONField(default=list, null=True, blank=True, verbose_name='Ссылки на фотографии')
     name_product = models.CharField(max_length=225, verbose_name='Название Детали', blank=True, null=True)
     car_info = models.ForeignKey(CarName, verbose_name='Название производителя/название автомобиля',
