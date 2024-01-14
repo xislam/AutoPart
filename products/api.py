@@ -6,8 +6,8 @@ from rest_framework.response import Response
 from django.db.models import Count, Value, CharField
 
 from basket.models import Order
-from .models import Product, CarMake, CarName
-from .serializers import ProductSerializer, CarMakeSerializer, CarNameSerializer
+from .models import Product, CarMake, CarName, Category
+from .serializers import ProductSerializer, CarMakeSerializer, CarNameSerializer, CategorySerializer
 
 import django_filters
 
@@ -68,3 +68,8 @@ class CarNameListView(generics.ListAPIView):
 class PopularProductListView(generics.ListAPIView):
     queryset = Product.objects.filter(is_popular=True)
     serializer_class = ProductSerializer
+
+
+class CategoryListView(generics.ListAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
