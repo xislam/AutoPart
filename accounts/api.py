@@ -8,8 +8,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from .models import User
-from .serializers import UserRegistrationSerializer, UserLoginSerializer, PasswordResetSerializer, UserSerializer
+from .models import User, FavoriteProduct
+from .serializers import UserRegistrationSerializer, UserLoginSerializer, PasswordResetSerializer, UserSerializer, \
+    FavoriteProductSerializer, FavoriteProductListSerializer
 
 
 class RegistrationAPIView(generics.CreateAPIView):
@@ -114,3 +115,26 @@ class UserUpdateView(RetrieveUpdateAPIView):
     def get_object(self):
         # Retrieve the user associated with the JWT token
         return self.request.user
+
+
+class FavoriteProductListCreateView(generics.CreateAPIView):
+    serializer_class = FavoriteProductSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        # Return the favorite products of the authenticated user
+        return FavoriteProduct.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        # Set the user to the authenticated user before saving the favorite product
+        serializer.save(user=self.request.user)
+
+
+class FavoriteProductListView(generics.ListAPIView):
+    serializer_class = FavoriteProductListSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        # Retrieve the favorite products for the authenticated user
+        user = self.request.user
+        return FavoriteProduct.objects.filter(user=user)
