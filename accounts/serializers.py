@@ -22,3 +22,9 @@ class UserLoginSerializer(serializers.Serializer):
 class PasswordResetSerializer(serializers.Serializer):
     phone_number = serializers.CharField(max_length=255, required=False)
     email = serializers.EmailField(required=False)
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'phone_number', 'name', 'surname', 'email', 'birthday']

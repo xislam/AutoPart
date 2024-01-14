@@ -2,12 +2,14 @@ from django.core.mail import send_mail
 from django.db.models import Q
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import generics, permissions, status
+from rest_framework.generics import RetrieveUpdateAPIView
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from .models import User
-from .serializers import UserRegistrationSerializer, UserLoginSerializer, PasswordResetSerializer
+from .serializers import UserRegistrationSerializer, UserLoginSerializer, PasswordResetSerializer, UserSerializer
 
 
 class RegistrationAPIView(generics.CreateAPIView):
@@ -105,4 +107,10 @@ class CustomPasswordResetView(APIView):
                         status=status.HTTP_200_OK)
 
 
+class UserUpdateView(RetrieveUpdateAPIView):
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
 
+    def get_object(self):
+        # Retrieve the user associated with the JWT token
+        return self.request.user
