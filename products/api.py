@@ -61,3 +61,8 @@ class CarNameListView(generics.ListAPIView):
     serializer_class = CarNameSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['car_make__make']
+
+
+class PopularProductListView(generics.ListAPIView):
+    queryset = Product.objects.filter(is_popular=True)
+    serializer_class = ProductSerializer

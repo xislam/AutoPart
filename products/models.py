@@ -53,6 +53,7 @@ class Product(models.Model):
     code_product = models.CharField(max_length=225, verbose_name='Код продукта', blank=True, null=True)
     product_information = models.TextField(verbose_name='Информация о продукте', blank=True, null=True)
     external_color = models.CharField(verbose_name='Внешний цвет', max_length=100, blank=True, null=True)
+    is_popular = models.BooleanField(default=False, verbose_name='Популярное')
     old_price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Стара цена')
     new_price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Новая цена', null=True, blank=True)
 

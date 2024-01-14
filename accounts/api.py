@@ -130,6 +130,20 @@ class FavoriteProductListCreateView(generics.CreateAPIView):
         serializer.save(user=self.request.user)
 
 
+class FavoriteProductDeleteView(generics.DestroyAPIView):
+    serializer_class = FavoriteProductSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        # Return the favorite products of the authenticated user
+        return FavoriteProduct.objects.filter(user=self.request.user)
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
 class FavoriteProductListView(generics.ListAPIView):
     serializer_class = FavoriteProductListSerializer
     permission_classes = [permissions.IsAuthenticated]

@@ -17,7 +17,7 @@ class OrderListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Order
-        fields = ['id', 'products', 'create_date', 'total']
+        fields = ['id', 'products', 'create_date', 'total', 'status']
 
     def get_products(self, obj):
         return ', '.join([product.name_product for product in obj.product.all()])
