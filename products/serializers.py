@@ -26,4 +26,10 @@ class ProductSerializer(serializers.ModelSerializer):
                   'product_information', 'external_color', 'old_price', 'new_price']
 
 
+class ProductWithCountSerializer(serializers.Serializer):
+    name_product = serializers.CharField(source='name_product.name_product', read_only=True)
+    count = serializers.IntegerField()
 
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        return data

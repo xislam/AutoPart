@@ -92,13 +92,17 @@ class CustomPasswordResetView(APIView):
         user.set_password(new_password)
         user.save()
 
-        send_mail(
-            'Сброс пароля',
-            f'Ваш новый пароль: {new_password}',
-            'test.tset@internet.ru',  # Отправитель (ваша почта на mail.ru)
-            [user.email],  # Получатель (адрес электронной почты пользователя)
-            fail_silently=False,
-        )
+        recipient_email = user.email  # Проверьте, что user.email содержит корректный адрес
+
+        # Тема и текст письма
+        subject = 'Сброс пароля'
+        message = f'Ваш новый пароль: {new_password}'
+
+        print(recipient_email)
+        send_mail(subject, message, 'your_email@example.com', [recipient_email], fail_silently=False)
 
         return Response({'detail': 'Сброс пароля прошел успешно. Новый пароль отправлен на вашу электронную почту.'},
                         status=status.HTTP_200_OK)
+
+
+

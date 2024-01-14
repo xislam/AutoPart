@@ -1,5 +1,10 @@
+from django.db.models import Count
+from django.db.models.functions import Concat
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import generics
+from rest_framework import generics, status
+from rest_framework.response import Response
+from django.db.models import Count, Value, CharField
+
 from .models import Product, CarMake, CarName
 from .serializers import ProductSerializer, CarMakeSerializer, CarNameSerializer
 
@@ -23,6 +28,24 @@ class ProductListView(generics.ListAPIView):
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = ProductFilter
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        # Получение итоговой информации по количеству продуктов с именами
+        model_counts = queryset.values('car_info__car_name').annotate(
+            count=Count('id'),
+            detail_names=Concat('name_product', Value(', '), output_field=CharField())
+        )
+
+        result_data = self.get_serializer(queryset, many=True).data
+        for item in model_counts:
+            car_name = item['car_info__car_name']
+            count = item['count']
+            detail_names = item['detail_names']
+            result_data.append({'car_name': car_name, 'count': count, 'detail_names': detail_names})
+
+        return Response(result_data, status=status.HTTP_200_OK)
 
 
 class CarMakeListView(generics.ListAPIView):
