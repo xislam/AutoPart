@@ -43,7 +43,7 @@ class CarName(models.Model):
 
 class Product(models.Model):
     fotos = models.JSONField(default=list, null=True, blank=True, verbose_name='Ссылки на фотографии')
-    name_product = models.CharField(max_length=225, verbose_name='Название производителя', blank=True, null=True)
+    name_product = models.CharField(max_length=225, verbose_name='Название Детали', blank=True, null=True)
     car_info = models.ForeignKey(CarName, verbose_name='Название производителя/название автомобиля',
                                  on_delete=models.CASCADE, related_name='car_info_r')
     model_year = models.IntegerField(verbose_name='Год модели', blank=True, null=True)
