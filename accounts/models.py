@@ -74,5 +74,5 @@ class FavoriteProduct(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
     class Meta:
-        unique_together = ['product']
+        unique_together = ['user', 'product']
 

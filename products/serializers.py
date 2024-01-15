@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from accounts.models import FavoriteProduct
 from products.models import CarMake, CarName, Product, Category
 
 
@@ -39,3 +40,18 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = '__all__'
+
+
+class ProductDitailSerializer(serializers.ModelSerializer):
+    is_favorite = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Product
+        fields = '__all__'
+
+    def get_is_favorite(self, obj):
+        # Получаем текущего пользователя
+        user = self.context['request'].user
+
+        # Проверяем, добавлен ли продукт в избранное для данного пользователя
+        return FavoriteProduct.objects.filter(user=user, product=obj).exists()
