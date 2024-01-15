@@ -71,3 +71,5 @@ class FavoriteProductListSerializer(serializers.ModelSerializer):
             'old_price': product.old_price,
             # Add other fields as needed
         }
+
+
