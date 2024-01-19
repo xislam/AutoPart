@@ -50,6 +50,12 @@ class ProductListView(generics.ListAPIView):
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
 
+        car_name_param = self.request.query_params.get('car_name', None)
+
+        if car_name_param:
+            # Если указано наименование машины, фильтруем только по этой машине
+            queryset = queryset.filter(car_info__car_name=car_name_param)
+
         # Получение итоговой информации по количеству продуктов с именами
         model_counts = queryset.values('car_info__car_name').annotate(
             count=Count('id'),
