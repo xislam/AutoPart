@@ -28,11 +28,7 @@ class ProductFilter(django_filters.FilterSet):
 
     def filter_name_product(self, queryset, name_product, value):
         names = value.split(',')  # Split the input into a list of names
-        filters = [django_filters.filters.Q(name_product__icontains=name) for name in names]
-        combined_filters = filters.pop()
-        for f in filters:
-            combined_filters |= f
-        return queryset.filter(combined_filters)
+        return queryset.filter(name_product__in=names)
 
 
 class ProductListView(generics.ListAPIView):
