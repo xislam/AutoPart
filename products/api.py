@@ -3,6 +3,7 @@ from django.db.models.functions import Concat
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics, status
 from rest_framework.generics import RetrieveAPIView
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from django.db.models import Count, Value, CharField
 
@@ -12,6 +13,12 @@ from .models import Product, CarMake, CarName, Category
 from .serializers import ProductSerializer, CarMakeSerializer, CarNameSerializer, CategorySerializer
 
 import django_filters
+
+
+class CustomPageNumberPagination(PageNumberPagination):
+    page_size = 14
+    page_size_query_param = 'page_size'
+    max_page_size = 100000
 
 
 class ProductFilter(django_filters.FilterSet):
@@ -38,6 +45,7 @@ class ProductListView(generics.ListAPIView):
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = ProductFilter
+    pagination_class = CustomPageNumberPagination
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
@@ -122,6 +130,7 @@ class ProductSearchView(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend]
     filterset_class = ProductFilter
     search_fields = ['name_product']
+    pagination_class = CustomPageNumberPagination
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
