@@ -30,6 +30,7 @@ class ProductFilter(django_filters.FilterSet):
         model = Product
         fields = {
             'car_info__car_name': ['icontains'],
+            'name_product': ['name_product'],
         }
 
     def filter_name_product(self, queryset, name_product, value):
