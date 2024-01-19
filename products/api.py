@@ -18,14 +18,13 @@ import django_filters
 class CustomPageNumberPagination(PageNumberPagination):
     page_size = 14
     page_size_query_param = 'page_size'
-    max_page_size = 100000
+    max_page_size = 10000
 
 
 class ProductFilter(django_filters.FilterSet):
     model_year__gte = django_filters.NumberFilter(field_name='model_year', lookup_expr='gte')
     model_year__lte = django_filters.NumberFilter(field_name='model_year', lookup_expr='lte')
     category = django_filters.CharFilter(field_name='category__name', lookup_expr='icontains')
-    name_product = django_filters.CharFilter(method='filter_name_product')
 
     class Meta:
         model = Product
@@ -35,44 +34,43 @@ class ProductFilter(django_filters.FilterSet):
 
     def filter_name_product(self, queryset, name_product, value):
         names = value.split(',')  # Split the input into a list of names
-        return queryset.filter(name_product__in=names)
+        filters = [django_filters.filters.Q(name_product__icontains=name) for name in names]
+        combined_filters = filters.pop()
+        for f in filters:
+            combined_filters |= f
+        return queryset.filter(combined_filters)
 
 
 class ProductListView(generics.ListAPIView):
     queryset = Product.objects.exclude(
         id__in=Subquery(Order.objects.filter(product=OuterRef('id')).values('product'))
     )
+    pagination_class = CustomPageNumberPagination
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = ProductFilter
-    pagination_class = CustomPageNumberPagination
+
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
 
-        car_name_param = self.request.query_params.get('car_name', None)
+        # Получение итоговой информации по количеству продуктов с именами
+        model_counts = queryset.values('car_info__car_name').annotate(
+            count=Count('id'),
+            detail_names=Concat('name_product', Value(', '), output_field=CharField())
+        )
 
         result_data = {'products': [], 'categories': []}
 
-        # Если указано наименование машины, фильтруем только по этой машине
-        if car_name_param:
-            queryset = queryset.filter(car_info__car_name=car_name_param)
+        for item in model_counts:
+            car_name = item['car_info__car_name']
+            count = item['count']
+            detail_names = item['detail_names']
 
-            # Получение итоговой информации по количеству продуктов только для указанной машины
-            model_counts = queryset.values('car_info__car_name').annotate(
-                count=Count('id'),
-                detail_names=Concat('name_product', Value(', '), output_field=CharField())
-            )
+            # Добавление информации о категории в список 'categories'
+            result_data['categories'].append({'car_name': car_name, 'count': count, 'detail_names': detail_names})
 
-            for item in model_counts:
-                car_name = item['car_info__car_name']
-                count = item['count']
-                detail_names = item['detail_names']
-
-                # Добавление информации о категории в список 'categories'
-                result_data['categories'].append({'car_name': car_name, 'count': count, 'detail_names': detail_names})
-
-        # Сериализация всех продуктов и добавление в список 'products'
+        # Сериализация продуктов и добавление в список 'products'
         result_data['products'] = self.get_serializer(queryset, many=True).data
 
         return Response(result_data, status=status.HTTP_200_OK)
@@ -93,6 +91,7 @@ class CarNameListView(generics.ListAPIView):
 class PopularProductListView(generics.ListAPIView):
     queryset = Product.objects.filter(is_popular=True)
     serializer_class = ProductSerializer
+    pagination_class = CustomPageNumberPagination
 
 
 class CategoryListView(generics.ListAPIView):
@@ -132,11 +131,11 @@ class ProductSearchView(generics.ListAPIView):
     queryset = Product.objects.exclude(
         id__in=Subquery(Order.objects.filter(product=OuterRef('id')).values('product'))
     )
+    pagination_class = CustomPageNumberPagination
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = ProductFilter
     search_fields = ['name_product']
-    pagination_class = CustomPageNumberPagination
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
