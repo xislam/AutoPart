@@ -52,8 +52,10 @@ class ProductListView(generics.ListAPIView):
 
         car_name_param = self.request.query_params.get('car_name', None)
 
+        result_data = {'products': [], 'categories': []}
+
+        # Если указано наименование машины, фильтруем только по этой машине
         if car_name_param:
-            # Если указано наименование машины, фильтруем только по этой машине
             queryset = queryset.filter(car_info__car_name=car_name_param)
 
             # Получение итоговой информации по количеству продуктов только для указанной машины
@@ -62,8 +64,6 @@ class ProductListView(generics.ListAPIView):
                 detail_names=Concat('name_product', Value(', '), output_field=CharField())
             )
 
-            result_data = {'products': [], 'categories': []}
-
             for item in model_counts:
                 car_name = item['car_info__car_name']
                 count = item['count']
@@ -72,28 +72,10 @@ class ProductListView(generics.ListAPIView):
                 # Добавление информации о категории в список 'categories'
                 result_data['categories'].append({'car_name': car_name, 'count': count, 'detail_names': detail_names})
 
-            # Сериализация продуктов и добавление в список 'products'
-            result_data['products'] = self.get_serializer(queryset, many=True).data
+        # Сериализация всех продуктов и добавление в список 'products'
+        result_data['products'] = self.get_serializer(queryset, many=True).data
 
-            return Response(result_data, status=status.HTTP_200_OK)
-        else:
-            # Если не указано наименование машины, выводим все продукты с наименованием и количеством
-            model_counts = queryset.values('car_info__car_name').annotate(
-                count=Count('id'),
-                detail_names=Concat('name_product', Value(', '), output_field=CharField())
-            )
-
-            result_data = {'categories': []}
-
-            for item in model_counts:
-                car_name = item['car_info__car_name']
-                count = item['count']
-                detail_names = item['detail_names']
-
-                # Добавление информации о категории в список 'categories'
-                result_data['categories'].append({'car_name': car_name, 'count': count, 'detail_names': detail_names})
-
-            return Response(result_data, status=status.HTTP_200_OK)
+        return Response(result_data, status=status.HTTP_200_OK)
 
 
 class CarMakeListView(generics.ListAPIView):
