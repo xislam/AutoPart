@@ -21,6 +21,17 @@ class CustomPageNumberPagination(PageNumberPagination):
     page_size_query_param = 'page_size'
     max_page_size = 10000
 
+    def get_page_size(self, request):
+        """
+        Determine the page size by the page_size_query_param in the request.
+        """
+        page_size = super().get_page_size(request)
+        if self.page_size_query_param:
+            param_page_size = int(request.query_params.get(self.page_size_query_param, 0))
+            if param_page_size > 0:
+                return param_page_size
+        return page_size
+
 
 class ProductFilter(django_filters.FilterSet):
     model_year__gte = django_filters.NumberFilter(field_name='model_year', lookup_expr='gte')
