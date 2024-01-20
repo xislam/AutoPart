@@ -34,7 +34,9 @@ class ProductSerializer(serializers.ModelSerializer):
 
         # Проверяем, добавлен ли продукт в избранное для данного пользователя
         if user is not None and user.is_authenticated:
-            return FavoriteProduct.objects.filter(user=user, product=obj).exists()
+            favorite_product = FavoriteProduct.objects.filter(user=user, product=obj).first()
+            if favorite_product:
+                return favorite_product.id
 
         # If user is not authenticated or is None, return False
         return False
