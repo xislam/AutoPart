@@ -118,35 +118,12 @@ class ProductSearchView(generics.ListAPIView):
     queryset = Product.objects.exclude(
         id__in=Subquery(Order.objects.filter(product=OuterRef('id')).values('product'))
     )
-    pagination_class = CustomPageNumberPagination
+
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = ProductFilter
     search_fields = ['name_product']
-
-    def list(self, request, *args, **kwargs):
-        queryset = self.filter_queryset(self.get_queryset())
-
-        # Получение итоговой информации по количеству продуктов с именами
-        model_counts = queryset.values('car_info__car_name').annotate(
-            count=Count('id'),
-            detail_names=Concat('name_product', Value(', '), output_field=CharField())
-        )
-
-        result_data = {'products': [], 'categories': []}
-
-        for item in model_counts:
-            car_name = item['car_info__car_name']
-            count = item['count']
-            detail_names = item['detail_names']
-
-            # Добавление информации о категории в список 'categories'
-            result_data['categories'].append({'car_name': car_name, 'count': count, 'detail_names': detail_names})
-
-        # Сериализация продуктов и добавление в список 'products'
-        result_data['products'] = self.get_serializer(queryset, many=True).data
-
-        return Response(result_data, status=status.HTTP_200_OK)
+    pagination_class = CustomPageNumberPagination
 
 
 class CategoryListView2(generics.ListAPIView):
