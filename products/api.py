@@ -173,6 +173,6 @@ class CategoryListView2(generics.ListAPIView):
 
         if car_name:
             # If car name is provided, filter categories for that car
-            queryset = queryset.filter(product__car_info__name=car_name)
+            queryset = queryset.filter(product__car_info__car_name=car_name)
 
         return queryset.distinct()
