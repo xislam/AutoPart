@@ -170,7 +170,7 @@ class ProductListView2(generics.ListAPIView):
 
         if car_name:
             car_info = get_object_or_404(CarName, name=car_name)
-            return Product.objects.filter(car_info=car_info)
+            return Product.objects.filter(car_info_r=car_info)
         else:
             categories_with_counts = Category.objects.annotate(product_count=Count('product'))
             return categories_with_counts
