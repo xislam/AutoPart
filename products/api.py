@@ -10,7 +10,8 @@ from django.db.models import Count, Value, CharField
 from accounts.models import FavoriteProduct
 from basket.models import Order
 from .models import Product, CarMake, CarName, Category
-from .serializers import ProductSerializer, CarMakeSerializer, CarNameSerializer, CategorySerializer
+from .serializers import ProductSerializer, CarMakeSerializer, CarNameSerializer, CategorySerializer, \
+    CategoryWithProductCountSerializer
 
 import django_filters
 
@@ -162,15 +163,6 @@ class ProductSearchView(generics.ListAPIView):
         return Response(result_data, status=status.HTTP_200_OK)
 
 
-class ProductListView2(generics.ListAPIView):
-    serializer_class = ProductSerializer
-
-    def get_queryset(self):
-        car_name = self.kwargs.get('car_name', None)
-
-        if car_name:
-            car_info = get_object_or_404(CarName, name=car_name)
-            return Product.objects.filter(car_info_r=car_info)
-        else:
-            categories_with_counts = Category.objects.annotate(product_count=Count('product'))
-            return categories_with_counts
+class CategoryListView2(generics.ListAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategoryWithProductCountSerializer
