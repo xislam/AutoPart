@@ -167,7 +167,7 @@ class CategoryListView2(generics.ListAPIView):
     serializer_class = CategoryWithProductCountSerializer
 
     def get_queryset(self):
-        car_name = self.kwargs.get('car_name', None)
+        car_name = self.request.query_params.get('car_name', None)
 
         queryset = Category.objects.annotate(product_count=Count('product'))
 
