@@ -47,7 +47,13 @@ class ProductFilter(django_filters.FilterSet):
 
     def filter_name_product(self, queryset, name_product, value):
         names = value.split(',')  # Split the input into a list of names
-        filters = [django_filters.filters.Q(name_product__exact=name) for name in names]
+        if len(names) > 1:
+            # Если есть запятая, использовать точный поиск
+            filters = [django_filters.filters.Q(name_product__exact=name) for name in names]
+        else:
+            # Если запятой нет, использовать нечувствительный к регистру поиск
+            filters = [django_filters.filters.Q(name_product__icontains=value)]
+
         combined_filters = filters.pop()
         for f in filters:
             combined_filters |= f
