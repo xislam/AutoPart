@@ -2,7 +2,7 @@ from django.db.models import Count, Subquery, OuterRef
 from django.db.models.functions import Concat
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics, status
-from rest_framework.generics import RetrieveAPIView
+from rest_framework.generics import RetrieveAPIView, get_object_or_404
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from django.db.models import Count, Value, CharField
@@ -50,7 +50,6 @@ class ProductListView(generics.ListAPIView):
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = ProductFilter
-
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
@@ -161,3 +160,17 @@ class ProductSearchView(generics.ListAPIView):
         result_data['products'] = self.get_serializer(queryset, many=True).data
 
         return Response(result_data, status=status.HTTP_200_OK)
+
+
+class ProductListView2(generics.ListAPIView):
+    serializer_class = ProductSerializer
+
+    def get_queryset(self):
+        car_name = self.kwargs.get('car_name', None)
+
+        if car_name:
+            car_info = get_object_or_404(CarName, name=car_name)
+            return Product.objects.filter(car_info=car_info)
+        else:
+            categories_with_counts = Category.objects.annotate(product_count=Count('product'))
+            return categories_with_counts
