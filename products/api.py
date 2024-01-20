@@ -41,7 +41,7 @@ class ProductFilter(django_filters.FilterSet):
         model = Product
         fields = {
             'car_info__car_name': ['icontains'],
-            'name_product': ['exact']  # Используем 'exact' для точного совпадения
+            'name_product': ['icontains']  # Используем 'exact' для точного совпадения
 
         }
 
