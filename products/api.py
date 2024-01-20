@@ -164,5 +164,14 @@ class ProductSearchView(generics.ListAPIView):
 
 
 class CategoryListView2(generics.ListAPIView):
-    queryset = Category.objects.all()
     serializer_class = CategoryWithProductCountSerializer
+
+    def get_queryset(self):
+        car_name = self.kwargs.get('car_name', None)
+
+        if car_name:
+            # If car name is provided, filter categories for that car
+            return Category.objects.filter(product__car_info__name=car_name).distinct()
+
+        # If no car name is provided, return all categories
+        return Category.objects.all()
