@@ -71,7 +71,7 @@ class Product(models.Model):
     external_color = models.CharField(verbose_name='Внешний цвет', max_length=100, blank=True, null=True)
     is_popular = models.BooleanField(default=False, verbose_name='Популярное')
     old_price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Стара цена')
-    price_in_won = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Цена на вон')
+    price_in_won = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Цена на вон', blank=True, null=True)
     new_price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Новая цена', null=True, blank=True)
 
     def __str__(self):
