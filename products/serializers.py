@@ -39,6 +39,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
         return FavoriteProduct.objects.filter(user=user, product=obj).exists()
 
+
 class ProductWithCountSerializer(serializers.Serializer):
     name_product = serializers.CharField(source='name_product.name_product', read_only=True)
     count = serializers.IntegerField()
@@ -67,3 +68,12 @@ class ProductDitailSerializer(serializers.ModelSerializer):
 
         # Проверяем, добавлен ли продукт в избранное для данного пользователя
         return FavoriteProduct.objects.filter(user=user, product=obj).exists()
+
+
+class CategoryWithProductCountSerializer(serializers.ModelSerializer):
+    product_count = serializers.IntegerField(source='product_set.count', read_only=True)
+    products = ProductSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Category
+        fields = ['id', 'name', 'product_count', 'products']
