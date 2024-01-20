@@ -172,7 +172,7 @@ class CategoryListView2(generics.ListAPIView):
         if car_name:
             # If car name is provided, filter products for that car and annotate categories with product count
             return Category.objects.filter(product__car_info__name=car_name).annotate(
-                product_count=models.Count('product')).distinct()
+                product_count=Count('product')).distinct()
 
         # If no car name is provided, return all categories with product counts
-        return Category.objects.annotate(product_count=models.Count('product'))
+        return Category.objects.annotate(product_count=Count('product'))
