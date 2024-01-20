@@ -62,6 +62,16 @@ class ProductListView(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend]
     filterset_class = ProductFilter
 
+    def paginate_queryset(self, queryset):
+        # Get the requested page size from the query parameters
+        page_size = self.request.query_params.get('page_size', None)
+
+        # Set the page size based on the query parameter, if provided
+        if page_size:
+            self.paginator.page_size = int(page_size)
+
+        return super().paginate_queryset(queryset)
+
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
 
