@@ -59,7 +59,7 @@ class FavoriteProductListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = FavoriteProduct
-        fields = ['product', 'product_info']
+        fields = ['id', 'product', 'product_info']
 
     def get_product_info(self, obj):
         product = obj.product
