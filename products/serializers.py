@@ -73,3 +73,8 @@ class CategoryWithProductCountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ['id', 'name', 'product_count', 'products']
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['name'] += ','  # Append a comma to the 'name' field
+        return data
