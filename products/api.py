@@ -170,7 +170,7 @@ class CategoryListView2(generics.ListAPIView):
         car_name = self.kwargs.get('car_name', None)
 
         if car_name:
-            # If car name is provided, filter categories for that car
+            # If car name is provided, filter products for that car and annotate categories with product count
             return Category.objects.filter(product__car_info__name=car_name).annotate(
                 product_count=Count('product')).distinct()
 
