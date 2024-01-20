@@ -4,5 +4,7 @@ logs/
 .idea/
 __pycache__/
 .env
+.venv
+.venv2
 
 data.json

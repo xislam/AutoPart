@@ -21,7 +21,7 @@ class ExchangeRates(models.Model):
 
 class CarMake(models.Model):
     make = models.CharField(verbose_name='Марка', max_length=125)
-    create_date = models.DateTimeField(auto_created=True, verbose_name='Это создание')
+    create_date = models.DateTimeField(auto_now_add=True, verbose_name='Это создание')
 
     def __str__(self):
         return self.make
@@ -56,6 +56,7 @@ class Category(models.Model):
 
 
 class Product(models.Model):
+    product_id = models.CharField(max_length=40, null=True, blank=True)
     category = models.ForeignKey(Category, verbose_name='Категория', on_delete=models.CASCADE, null=True, blank=True)
     fotos = models.JSONField(default=list, null=True, blank=True, verbose_name='Ссылки на фотографии')
     name_product = models.CharField(max_length=225, verbose_name='Название Детали', blank=True, null=True)
