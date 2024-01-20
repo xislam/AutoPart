@@ -17,7 +17,8 @@ import django_filters
 
 
 class CustomPageNumberPagination(PageNumberPagination):
-    page_size_query_param = 'page_size'
+    page_size = 16
+    page_size_query_param = None
     max_page_size = 10000
 
     def get_page_size(self, request):
@@ -57,20 +58,10 @@ class ProductListView(generics.ListAPIView):
     queryset = Product.objects.exclude(
         id__in=Subquery(Order.objects.filter(product=OuterRef('id')).values('product'))
     )
-    pagination_class = CustomPageNumberPagination
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = ProductFilter
-
-    def paginate_queryset(self, queryset):
-        # Get the requested page size from the query parameters
-        page_size = self.request.query_params.get('page_size', None)
-
-        # Set the page size based on the query parameter, if provided
-        if page_size:
-            self.paginator.page_size = int(page_size)
-
-        return super().paginate_queryset(queryset)
+    pagination_class = CustomPageNumberPagination
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
