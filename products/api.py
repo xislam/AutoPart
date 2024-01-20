@@ -36,28 +36,30 @@ class ProductFilter(django_filters.FilterSet):
     model_year__gte = django_filters.NumberFilter(field_name='model_year', lookup_expr='gte')
     model_year__lte = django_filters.NumberFilter(field_name='model_year', lookup_expr='lte')
     category = django_filters.CharFilter(field_name='category__name', lookup_expr='icontains')
+    name_product = django_filters.CharFilter(method='filter_name_product')
 
     class Meta:
         model = Product
         fields = {
             'car_info__car_name': ['icontains'],
-            'name_product': ['icontains']  # Используем 'exact' для точного совпадения
-
         }
 
     def filter_name_product(self, queryset, name_product, value):
         names = value.split(',')  # Split the input into a list of names
-        if len(names) > 1:
-            # Если есть запятая, использовать точный поиск
-            filters = [django_filters.filters.Q(name_product__exact=name) for name in names]
-        else:
-            # Если запятой нет, использовать нечувствительный к регистру поиск
-            filters = [django_filters.filters.Q(name_product__icontains=value)]
-
+        filters = [django_filters.filters.Q(name_product__exact=name.strip()) for name in names]
         combined_filters = filters.pop()
         for f in filters:
             combined_filters |= f
         return queryset.filter(combined_filters)
+
+
+class ProductsFilter(django_filters.FilterSet):
+    class Meta:
+        model = Product
+        fields = {
+            'car_info__car_name': ['icontains'],
+            'name_product': ['icontains']
+        }
 
 
 class ProductListView(generics.ListAPIView):
@@ -128,7 +130,7 @@ class ProductSearchView(generics.ListAPIView):
 
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend]
-    filterset_class = ProductFilter
+    filterset_class = ProductsFilter
     search_fields = ['name_product']
     pagination_class = CustomPageNumberPagination
 
