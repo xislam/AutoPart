@@ -57,12 +57,10 @@ class ProductListView(generics.ListAPIView):
     queryset = Product.objects.exclude(
         id__in=Subquery(Order.objects.filter(product=OuterRef('id')).values('product'))
     )
-    pagination_class = CustomPageNumberPagination
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = ProductFilter
-
-
+    pagination_class = CustomPageNumberPagination
 
 
 class CarMakeListView(generics.ListAPIView):
