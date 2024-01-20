@@ -33,10 +33,6 @@ class ProductSerializer(serializers.ModelSerializer):
         user = self.context['request'].user
 
         # Проверяем, добавлен ли продукт в избранное для данного пользователя
-        if isinstance(user, AnonymousUser) or not user.is_authenticated:
-            # If the user is anonymous or not authenticated, return False
-            return False
-
         return FavoriteProduct.objects.filter(user=user, product=obj).exists()
 
 
