@@ -52,7 +52,7 @@ class ProductListView(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend]
     filterset_class = ProductFilter
 
-    def get(self, request, *args, **kwargs):
+    def list(self, request, *args, **kwargs):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
 
