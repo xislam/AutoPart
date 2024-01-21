@@ -86,6 +86,7 @@ async def parse_page(asession: AsyncHTMLSession, product_id: int, product_price:
         product.code_product = result[4]
         product.product_information = result[5]
         product.old_price = (product_price + 20) * won_to_usd
+        product.price_in_won = product_price
 
         await product.asave()
 
