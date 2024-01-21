@@ -26,8 +26,8 @@ class Order(models.Model):
     status = models.CharField(max_length=45, verbose_name='Статус', choices=STATUS_CHOICES, default='ожидание')
     create_date = models.DateTimeField(auto_now_add=True, verbose_name='Создания')
 
-    def __set__(self, instance, value):
-        return self.neme
+    def __str__(self):
+        return self.user.name
 
     class Meta:
 
