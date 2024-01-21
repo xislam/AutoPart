@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 
 import ssl
+
 ssl._create_default_https_context = ssl._create_unverified_context
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -138,8 +139,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOW_ALL_ORIGINS = True  # Установите в True, чтобы разрешить все источники (не рекомендуется в продакшене)
 CORS_ALLOWED_ORIGINS = [
-    "http://195.49.210.86"
-
+    "https://seoulgarage.com", "https://195.49.210.86"
 ]
 CORS_ALLOW_METHODS = [
     "GET",
@@ -191,6 +191,3 @@ EMAIL_HOST_PASSWORD = 'hifsfdlvruhkkzbn'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
 EMAIL_ADMIN = EMAIL_HOST_USER
-
-
-

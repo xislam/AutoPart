@@ -46,7 +46,7 @@ signBtn.addEventListener("click", () => {
     if (signLogin.value.trim() && signPass.value.trim()) {
         signLogin.classList.remove("border-[#F11313]")
         signPass.classList.remove("border-[#F11313]")
-        const url = 'http://195.49.210.86/api/login/';
+        const url = ' https://seoulgarage.com/api/login/';
         const auth_obj = {
             identifier: signLogin.value,
             password: signPass.value

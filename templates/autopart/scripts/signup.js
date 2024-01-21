@@ -66,7 +66,7 @@ date.addEventListener('keydown', function (event) {
 });
 
 btn_auth.addEventListener("click", () => {
-    const url = 'http://195.49.210.86/api/api/register/';
+    const url = ' https://seoulgarage.com/api/api/register/';
     const auth_obj = {
         phone_number: number_phone.value,
         name: namE.value,

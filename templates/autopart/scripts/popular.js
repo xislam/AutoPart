@@ -1,7 +1,7 @@
 const popular = document.getElementById("popular")
 
 document.addEventListener('DOMContentLoaded', function () {
-    fetch('http://195.49.210.86/api/popular_products/', {
+    fetch(' https://seoulgarage.com/api/popular_products/', {
         method: 'GET'
     })
         .then(response => {

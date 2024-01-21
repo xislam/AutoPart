@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const btnSearch = document.getElementById("btnSearch")
     const errorValid = document.getElementById("errorValid")
 
-    fetch("http://195.49.210.86/api/categories/")
+    fetch(" https://seoulgarage.com/api/categories/")
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);

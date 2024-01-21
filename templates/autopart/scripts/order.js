@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log(user)
 
     if (user) {
-        fetch('http://195.49.210.86/api/profile/', {
+        fetch(' https://seoulgarage.com/api/profile/', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         console.log(obj)
 
-        const url = 'http://195.49.210.86/api/orders/';
+        const url = ' https://seoulgarage.com/api/orders/';
 
         if (agree.checked) {
             fetch(url, {

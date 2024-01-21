@@ -23,6 +23,7 @@ from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
+from products.views import SimpleHTMLView
 from root import settings
 
 schema_view = get_schema_view(
@@ -40,6 +41,7 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', SimpleHTMLView.as_view(), name='index'),
     path('api/', include('products.urls')),
     path('api/', include('accounts.urls')),
     path('api/', include('basket.urls')),

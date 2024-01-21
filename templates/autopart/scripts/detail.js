@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function handleInfos(id) {
-        fetch(`http://195.49.210.86/api/products/${id}/`, {
+        fetch(` https://seoulgarage.com/api/products/${id}/`, {
             method: 'GET',
             headers: token,
         })
@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         const queryString = Object.keys(optionObj)
                             .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(optionObj[key]))
                             .join('&');
-                        const api = 'http://195.49.210.86/api/products_s/?' + queryString;
+                        const api = ' https://seoulgarage.com/api/products_s/?' + queryString;
                         fetch(api, {
                             method: 'GET',
                         })
@@ -220,7 +220,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         const queryString = Object.keys(optionObj)
                             .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(optionObj[key]))
                             .join('&');
-                        const api = 'http://195.49.210.86/api/products_s/?' + queryString;
+                        const api = ' https://seoulgarage.com/api/products_s/?' + queryString;
                         fetch(api, {
                             method: 'GET',
                         })
@@ -266,7 +266,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.getElementById("like").addEventListener('click', () => {
         if (document.getElementById("like").classList.contains('text-black')) {
-            const apiUrl = `http://195.49.210.86/api/favorite_delete/${isfav}/`;
+            const apiUrl = ` https://seoulgarage.com/api/favorite_delete/${isfav}/`;
             fetch(apiUrl, {
                 method: 'DELETE',
                 headers: {
@@ -295,7 +295,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
         } else {
             if (user) {
-                const url = 'http://195.49.210.86/api/favorite_products/';
+                const url = ' https://seoulgarage.com/api/favorite_products/';
                 let obj = {
                     product: id
                 }
