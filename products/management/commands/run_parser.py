@@ -85,8 +85,7 @@ async def parse_page(asession: AsyncHTMLSession, product_id: int, product_price:
         product.v_i_n = data[3] if "없음" not in data[3] else "не существует"
         product.code_product = result[4]
         product.product_information = result[5]
-        product.old_price = (product_price +
-                             с) * won_to_usd
+        product.old_price = (product_price + 20) * won_to_usd
 
         await product.asave()
 
