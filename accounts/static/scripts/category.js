@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const btnSearch = document.getElementById("btnSearch")
     const errorValid = document.getElementById("errorValid")
 
-    fetch(" https://seoulgarage.com/api/categories/")
+    fetch("https://seoulgarage.com/api/categories/")
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
@@ -23,8 +23,8 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             data.forEach((item) => {
-                const li = document.createElement("li")
-                li.classList = "uppercase"
+                const li = document.createElement("p")
+                li.classList = "uppercase text-end hover:bg-black/10"
                 li.textContent = item.name
                 li.setAttribute("onclick", `prodLink('${item.name + ','}')`)
                 mobcat.appendChild(li)
@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log(object)
 
         setSecureCookie('filterItem', JSON.stringify(object), 30)
-        window.location.href = "/products.html"
+        window.location.href = "/api/products_html/"
     }
 
     btnSearch.addEventListener("click", () => {
@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log(object)
 
             setSecureCookie('searchItem', JSON.stringify(object), 30)
-            window.location.href = "/products.html"
+            window.location.href = "/api/products_html/"
         }
     })
 });

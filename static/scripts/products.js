@@ -109,7 +109,7 @@ function setSecureCookie(name, value, days) {
 
 document.addEventListener('DOMContentLoaded', function () {
     // фильтр
-    fetch(' https://seoulgarage.com/api/carmakes/')
+    fetch('https://seoulgarage.com/api/carmakes/')
         .then(response => response.json())
         .then(data => {
             data.forEach(function (value) {
@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
     mark.addEventListener("change", () => {
-        const url = ' https://seoulgarage.com/api/carnames/';
+        const url = 'https://seoulgarage.com/api/carnames/';
 
         const car_make__make = 'car_make__make';
         const paramValue = mark.value;
@@ -139,6 +139,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 return response.json();
             })
             .then(data => {
+                model.innerHTML = ''
+                let opt = document.createElement("option")
+                opt.value = "";
+                opt.text = "Выберите модель";
+                model.appendChild(opt)
                 data.forEach(function (value) {
                     var optionElement = document.createElement("option");
                     optionElement.value = value.car_name;
@@ -150,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.error('Произошла ошибка:', error);
             });
 
-        fetch(' https://seoulgarage.com/api/categories/')
+        fetch('https://seoulgarage.com/api/categories/')
             .then(response => response.json())
             .then(data => {
                 data.forEach(function (value) {
@@ -200,7 +205,7 @@ async function handleUpdateData(token, filters, name) {
         const queryString = Object.keys(filters)
             .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(filters[key]))
             .join('&');
-        const api = ' https://seoulgarage.com/api/products/?' + queryString;
+        const api = 'https://seoulgarage.com/api/products/?' + queryString;
 
         const response = await fetch(api, {
             method: 'GET',
@@ -234,7 +239,7 @@ async function handleUpdateData(token, filters, name) {
                     const queryString = Object.keys(optionObj)
                         .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(optionObj[key]))
                         .join('&');
-                    const api = ' https://seoulgarage.com/api/products/?' + queryString;
+                    const api = 'https://seoulgarage.com/api/products/?' + queryString;
                     fetch(api, {
                         method: 'GET',
                     })
@@ -266,7 +271,7 @@ async function handleUpdateData(token, filters, name) {
                     const queryString = Object.keys(optionObj)
                         .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(optionObj[key]))
                         .join('&');
-                    const api = ' https://seoulgarage.com/api/products/?' + queryString;
+                    const api = 'https://seoulgarage.com/api/products/?' + queryString;
                     fetch(api, {
                         method: 'GET',
                     })
@@ -311,7 +316,7 @@ async function handleUpdateDataSearch(token, filters) {
         const queryString = Object.keys(filters)
             .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(filters[key]))
             .join('&');
-        const api = ' https://seoulgarage.com/api/products_s/?' + queryString;
+        const api = 'https://seoulgarage.com/api/products_s/?' + queryString;
 
         const response = await fetch(api, {
             method: 'GET',
@@ -345,7 +350,7 @@ async function handleUpdateDataSearch(token, filters) {
                     const queryString = Object.keys(optionObj)
                         .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(optionObj[key]))
                         .join('&');
-                    const api = ' https://seoulgarage.com/api/products_s/?' + queryString;
+                    const api = 'https://seoulgarage.com/api/products_s/?' + queryString;
                     fetch(api, {
                         method: 'GET',
                     })
@@ -377,7 +382,7 @@ async function handleUpdateDataSearch(token, filters) {
                     const queryString = Object.keys(optionObj)
                         .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(optionObj[key]))
                         .join('&');
-                    const api = ' https://seoulgarage.com/api/products_s/?' + queryString;
+                    const api = 'https://seoulgarage.com/api/products_s/?' + queryString;
                     fetch(api, {
                         method: 'GET',
                     })
@@ -426,7 +431,7 @@ async function handleCategory() {
         if (filterData.car_info__car_name__icontains.trim() === "" && filterData.name_product.trim() === "") {
             document.getElementById("categor").innerHTML = ''
             setSecureCookie('filterItem', JSON.stringify(""), 30);
-            const response = await fetch(' https://seoulgarage.com/api/products_category/');
+            const response = await fetch('https://seoulgarage.com/api/products_category/');
             const data = await response.json();
             console.log(data);
 
@@ -493,7 +498,7 @@ async function handleCategory() {
         } else {
             setSecureCookie('searchItem', JSON.stringify(""), 30);
             document.getElementById("categor").innerHTML = ''
-            const response = await fetch(` https://seoulgarage.com/api/products_category/?car_name=${filterData.car_info__car_name__icontains}`);
+            const response = await fetch(`https://seoulgarage.com/api/products_category/?car_name=${filterData.car_info__car_name__icontains}`);
             const data = await response.json();
             console.log(data);
 
@@ -600,7 +605,7 @@ btnShow.addEventListener("click", () => {
     const queryString = Object.keys(object)
         .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(object[key]))
         .join('&');
-    const api = ' https://seoulgarage.com/api/products/?' + queryString;
+    const api = 'https://seoulgarage.com/api/products/?' + queryString;
     fetch(api, {
         method: 'GET',
         headers: tokens
@@ -640,7 +645,7 @@ btnShow.addEventListener("click", () => {
 
 
 const deleteFavorite = (id) => {
-    const apiUrl = ` https://seoulgarage.com/api/favorite_delete/${id}/`;
+    const apiUrl = `https://seoulgarage.com/api/favorite_delete/${id}/`;
     fetch(apiUrl, {
         method: 'DELETE',
         headers: {
@@ -663,7 +668,7 @@ const deleteFavorite = (id) => {
 };
 
 const addFavorite = (productId) => {
-    const favUrl = ' https://seoulgarage.com/api/favorite_products/';
+    const favUrl = 'https://seoulgarage.com/api/favorite_products/';
     if (user) {
         const obj = {
             product: productId

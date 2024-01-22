@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log(user.access_token)
 
     // Получение истории данных
-    fetch(' https://seoulgarage.com/api/orders_list/', {
+    fetch('https://seoulgarage.com/api/orders_list/', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
     // получение данных профиля
-    fetch(' https://seoulgarage.com/api/profile/', {
+    fetch('https://seoulgarage.com/api/profile/', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
     function handleFav() {
-        fetch(' https://seoulgarage.com/api/favorite_products_list/', {
+        fetch('https://seoulgarage.com/api/favorite_products_list/', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 window.handleDelete = function (id) {
                     console.log(id)
                     // ваша логика удаления
-                    fetch(` https://seoulgarage.com/api/favorite_delete/${id}/`, {
+                    fetch(`https://seoulgarage.com/api/favorite_delete/${id}/`, {
                         method: 'DELETE',
                         headers: {
                             'Content-Type': 'application/json',
@@ -204,7 +204,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Получение избранных продуктов
-    fetch(' https://seoulgarage.com/api/favorite_products_list/', {
+    fetch('https://seoulgarage.com/api/favorite_products_list/', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -223,7 +223,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 window.handleDelete = function (id) {
                     console.log(id)
                     // ваша логика удаления
-                    fetch(` https://seoulgarage.com/api/favorite_delete/${id}/`, {
+                    fetch(`https://seoulgarage.com/api/favorite_delete/${id}/`, {
                         method: 'DELETE',
                         headers: {
                             'Content-Type': 'application/json',
@@ -277,7 +277,7 @@ document.addEventListener('DOMContentLoaded', function () {
     save_btn.addEventListener('click', () => {
         var username = getSecureCookie('userData');
         let user = JSON.parse(username);
-        let apiUrl = ' https://seoulgarage.com/api/profile/';
+        let apiUrl = 'https://seoulgarage.com/api/profile/';
 
         let userUpdateData = {
             birthday: document.getElementById("date").value,

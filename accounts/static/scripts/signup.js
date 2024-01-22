@@ -14,6 +14,14 @@ const number_phone = document.getElementById("number_phone");
 const customCheckbox = document.getElementById("customCheckbox")
 const rec = document.getElementById("rec")
 
+// errors
+const passErr = document.getElementById("passErr")
+const emailErr = document.getElementById("emailErr")
+const nameErr = document.getElementById("nameErr")
+const surnameErr = document.getElementById("surnameErr")
+const phoneErr = document.getElementById("phoneErr")
+const dateErr = document.getElementById("dateErr")
+
 cartIcon.addEventListener("click", () => {
     cart.classList.remove("hidden")
     cart.classList.add("flex")
@@ -66,7 +74,31 @@ date.addEventListener('keydown', function (event) {
 });
 
 btn_auth.addEventListener("click", () => {
-    const url = ' https://seoulgarage.com/api/api/register/';
+    if (namE.value.trim() === '') {
+        nameErr.classList.remove("hidden")
+        return;
+    }
+    if (surenamE.value.trim() === '') {
+        surnameErr.classList.remove("hidden")
+        return;
+    }
+    if (date.value.trim() === '') {
+        dateErr.classList.remove("hidden")
+        return;
+    }
+    if (phone_number.value.trim() === '') {
+        phoneErr.classList.remove("hidden")
+        return;
+    }
+    if (emailauth.value.trim() === '') {
+        emailErr.classList.remove("hidden")
+        return;
+    }
+    if (passwordauth.value.trim() === '') {
+        passErr.classList.remove("hidden")
+        return;
+    }
+    const url = 'https://seoulgarage.com/api/api/register/';
     const auth_obj = {
         phone_number: number_phone.value,
         name: namE.value,

@@ -7,6 +7,9 @@ const closeCart = document.getElementById("closeCart");
 const signLogin = document.getElementById("signLogin")
 const signPass = document.getElementById("signPass")
 const signBtn = document.getElementById("signBtn")
+const emailPass = document.getElementById("emailPass")
+const passErr = document.getElementById("passErr")
+
 
 
 cartIcon.addEventListener("click", () => {
@@ -46,7 +49,7 @@ signBtn.addEventListener("click", () => {
     if (signLogin.value.trim() && signPass.value.trim()) {
         signLogin.classList.remove("border-[#F11313]")
         signPass.classList.remove("border-[#F11313]")
-        const url = ' https://seoulgarage.com/api/login/';
+        const url = 'https://seoulgarage.com/api/login/';
         const auth_obj = {
             identifier: signLogin.value,
             password: signPass.value
@@ -87,9 +90,11 @@ signBtn.addEventListener("click", () => {
     } else {
         if (signLogin.value === "") {
             signLogin.classList.add("border-[#F11313]")
+            emailPass.classList.remove("hidden")
         }
         if (signPass.value === "") {
             signPass.classList.add("border-[#F11313]")
+            passErr.classList.remove("hidden")
         }
     }
 })

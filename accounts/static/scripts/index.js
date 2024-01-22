@@ -7,7 +7,23 @@ const cart = document.getElementById("cart")
 const cartBlock = document.getElementById("cartBlock")
 const cartIcon = document.getElementById("cartIcon")
 const closeCart = document.getElementById("closeCart")
+const mobcat = document.getElementById("mobcat")
 
+let scrollPosition = 0;
+
+function disableBodyScroll() {
+    // Сохраняем текущее положение скролла перед открытием модального окна
+    scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+
+    // Убираем скролл у body
+    document.body.style.overflow = 'hidden';
+}
+
+function enableBodyScroll() {
+    // Восстанавливаем скролл
+    document.body.style.overflow = '';
+    window.scrollTo(0, scrollPosition);
+}
 
 // burger
 const open_burger = document.getElementById("open_burger")

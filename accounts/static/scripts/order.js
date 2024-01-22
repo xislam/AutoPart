@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log(user)
 
     if (user) {
-        fetch(' https://seoulgarage.com/api/profile/', {
+        fetch('https://seoulgarage.com/api/profile/', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -118,11 +118,11 @@ document.addEventListener('DOMContentLoaded', function () {
             const div = document.createElement("div");
             div.classList = "pb-8 flex items-start flex-col sm:flex-row gap-5 lg:gap-[60px]";
             div.innerHTML = `
-            <img src=${item.photo} class="w-[240px] h-[192px] object-cover" alt="">
+            <img src=${item.photo} class="w-[240px] h-[192px] object-cover rounded-md" alt="">
             <div class="flex flex-col gap-6">
                 <h2 class="font-medium text-lg text-[#313141]">${item.name}</h2>
                 <span class="font-bold">${item.price}$</span>
-                <button class="bg-[#406EC7] text-white rounded py-2 px-10" onclick="toggleProduct(${item.id},'${item.name}',${item.price},'${item.photo}')">Удалить из корзины</button>
+                <button class="bg-[#406EC7] text-sm lg:text-base text-white rounded py-2 px-10" onclick="toggleProduct(${item.id},'${item.name}',${item.price},'${item.photo}')">Удалить из корзины</button>
             </div>
         `;
             productsItem.appendChild(div);
@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const cartItems = getCookies("cartItems") || [];
         let total = 0;
         cartItems.forEach((item) => {
-            total += Math.ceil(item.price)
+            total += +item.price
         })
 
         let obj = {
@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         console.log(obj)
 
-        const url = ' https://seoulgarage.com/api/orders/';
+        const url = 'https://seoulgarage.com/api/orders/';
 
         if (agree.checked) {
             fetch(url, {

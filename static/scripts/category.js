@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const btnSearch = document.getElementById("btnSearch")
     const errorValid = document.getElementById("errorValid")
 
-    fetch(" https://seoulgarage.com/api/categories/")
+    fetch("https://seoulgarage.com/api/categories/")
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             data.forEach((item) => {
                 const li = document.createElement("li")
-                li.classList = "uppercase"
+                li.classList = "uppercase text-end"
                 li.textContent = item.name
                 li.setAttribute("onclick", `prodLink('${item.name + ','}')`)
                 mobcat.appendChild(li)

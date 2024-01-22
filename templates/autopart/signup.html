@@ -20,6 +20,29 @@
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
+        input[type="checkbox"] {
+    display: none;
+}
+
+/* Стилизуем кастомный чекбокс с помощью фоновой картинки */
+input[type="checkbox"]+label {
+    display: inline-block;
+    min-width: 20px;
+    /* Ширина картинки */
+    min-height: 20px;
+    /* Высота картинки */
+    background-image: url(/images/uncheck.png);
+    /* Путь к изображению неотмеченного чекбокса */
+    background-size: cover;
+    /* Растягиваем изображение, чтобы оно занимало всю площадь */
+    cursor: pointer;
+}
+
+/* Обновляем картинку при отметке чекбокса */
+input[type="checkbox"]:checked+label {
+    background-image: url(/images/checked.png);
+    /* Путь к изображению отмеченного чекбокса */
+}
     </style>
 </head>
 <body>
@@ -79,7 +102,7 @@
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M15.2477 16.11L16.9277 14.43C17.154 14.2066 17.4403 14.0536 17.7518 13.9897C18.0634 13.9258 18.3867 13.9537 18.6827 14.07L20.7302 14.8875C21.0293 15.0089 21.2858 15.2162 21.4673 15.4831C21.6488 15.75 21.7473 16.0647 21.7502 16.3875V20.1375C21.7485 20.3571 21.7023 20.5741 21.6145 20.7753C21.5267 20.9766 21.3991 21.158 21.2393 21.3087C21.0796 21.4594 20.891 21.5761 20.6849 21.652C20.4788 21.7278 20.2595 21.7612 20.0402 21.75C5.69272 20.8575 2.79772 8.70753 2.25022 4.05753C2.22481 3.82918 2.24803 3.59804 2.31836 3.37931C2.38869 3.16058 2.50453 2.95922 2.65827 2.78848C2.81201 2.61774 3.00016 2.48148 3.21034 2.38868C3.42052 2.29587 3.64797 2.24862 3.87772 2.25003H7.50022C7.82348 2.25099 8.13906 2.34863 8.40637 2.5304C8.67368 2.71217 8.8805 2.96976 9.00022 3.27003L9.81772 5.31753C9.93791 5.61233 9.96858 5.93601 9.90588 6.24814C9.84319 6.56027 9.68992 6.847 9.46522 7.07253L7.78522 8.75253C7.78522 8.75253 8.75272 15.3 15.2477 16.11Z" fill="#406EC7"/>
                             </svg>
-                            <span>Служба поддержки {{ contact.phone_number }}</span>
+                            <span>Служба поддержки 1566-8209</span>
                         </div>
                         <div class="flex items-center gap-2">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -117,15 +140,33 @@
     <!-- section start -->
     <section class="flex flex-col items-center px-4 lg:px-20">
         <h2 class="font-semibold text-2xl md:text-4xl mb-[60px]">Зарегистрироваться</h2>
-        <form action="" class="w-full lg:w-[1024px] flex flex-col gap-4">
-            <input id="name" class="w-full h-[46px] rounded-md border px-4 py-3 border-[#E3E5EE]" placeholder="Имя" type="text">
-            <input id="surename" class="w-full h-[46px] rounded-md border px-4 py-3 border-[#E3E5EE]" placeholder="Фамилия" type="text">
-            <input id="date" class="w-full h-[46px] rounded-md border px-4 py-3 border-[#E3E5EE]" placeholder="YYYY-MM-DD" type="text">
-            <input id="number_phone" class="w-full h-[46px] rounded-md border px-4 py-3 border-[#E3E5EE]" placeholder="Номер телефона" type="text">
-            <input id="email" class="w-full h-[46px] rounded-md border px-4 py-3 border-[#E3E5EE]" placeholder="Email" type="email">
-            <input id="password" class="w-full h-[46px] rounded-md border px-4 py-3 border-[#E3E5EE]" placeholder="Пароль" type="password">
+        <form action="" class="w-full lg:w-[1024px] flex flex-col gap-6">
+            <div class="relative">
+                <p id="nameErr" class="absolute right-0 -top-5 text-xs text-[#F11313] hidden">*Введите ваше имя</p>
+                <input id="name" class="w-full h-[46px] rounded-md border px-4 py-3 border-[#E3E5EE]" placeholder="Имя" type="text">
+            </div>
+            <div class="relative">
+                <p id="surnameErr" class="absolute right-0 -top-5 text-xs text-[#F11313] hidden">*Введите вашу фамилию</p>
+                <input id="surename" class="w-full h-[46px] rounded-md border px-4 py-3 border-[#E3E5EE]" placeholder="Фамилия" type="text">
+            </div>
+            <div class="relative">
+                <p id="dateErr" class="absolute right-0 -top-5 text-xs text-[#F11313] hidden">*Введите дату рождения</p>
+                <input id="date" class="w-full h-[46px] rounded-md border px-4 py-3 border-[#E3E5EE]" placeholder="YYYY-MM-DD" type="text">
+            </div>
+            <div class="relative">
+                <p id="phoneErr" class="absolute right-0 -top-5 text-xs text-[#F11313] hidden">*Введите номер телефона</p>
+                <input id="number_phone" class="w-full h-[46px] rounded-md border px-4 py-3 border-[#E3E5EE]" placeholder="Номер телефона" type="text">
+            </div>
+            <div class="relative">
+                <p id="emailErr" class="absolute right-0 -top-5 text-xs text-[#F11313] hidden">*Введите ваш email</p>
+                <input id="email" class="w-full h-[46px] rounded-md border px-4 py-3 border-[#E3E5EE]" placeholder="Email" type="email">
+            </div>
+            <div class="relative">
+                <p id="passErr" class="absolute right-0 -top-5 text-xs text-[#F11313] hidden">*Придумайте пароль</p>
+                <input id="password" class="w-full h-[46px] rounded-md border px-4 py-3 border-[#E3E5EE]" placeholder="Пароль" type="password">
+            </div>
         </form>
-        <div class="w-full lg:w-[1024px] flex flex-col gap-4 mt-6">
+        <div class="w-full lg:w-[1024px] flex flex-col gap-3 mt-6 relative">
             <div class="flex items-center gap-5">
                 <input name="rec" type="checkbox" id="customCheckbox">
                 <label for="customCheckbox"></label>
@@ -136,8 +177,9 @@
                 <label for="rec"></label>
                 <p>Sign up for our newspaper</p>
             </div>
+            <p class="text-xs text-black/50 text-center">Подвердите, что вы соглашаетесь с нашими правилами.</p>
         </div>
-        <button id="btn_auth" class="py-3 w-full mt-[60px] sm:w-[436px] bg-[#406EC7] rounded-lg text-white ">Зарегистрироваться</button>
+        <button id="btn_auth" class="py-3 w-full mt-10 sm:w-[436px] bg-[#406EC7] rounded-lg text-white hover:opacity-80">Зарегистрироваться</button>
         <p class="my-10">У вас уже есть аккаунт? <a class="text-[#406EC7]" href="/signin.html">Войти</a></p>
     </section>
     <!-- section end -->

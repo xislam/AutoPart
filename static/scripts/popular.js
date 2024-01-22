@@ -1,7 +1,7 @@
 const popular = document.getElementById("popular")
 
 document.addEventListener('DOMContentLoaded', function () {
-    fetch(' https://seoulgarage.com/api/popular_products/', {
+    fetch('https://seoulgarage.com/api/popular_products/', {
         method: 'GET'
     })
         .then(response => {
@@ -23,8 +23,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 <h3 class="text-lg sm:text-xl font-semibold">${element.name_product}</h3>
                 <p class="pl-2">${element.product_information.split("").slice(0, 20).join("")}</p>
                 <div class="flex items-center gap-6">
-                    <span class="text-[#F11313] text-lg sm:text-xl font-bold">${Math.ceil(element.new_price)} $</span>
-                    <span class="text-[#7A859E] line-through">${Math.ceil(element.old_price)} $</span>
+                    <span class="text-[#F11313] font-bold text-xl">${element.new_price ? element.new_price : element.old_price}$</span>
+                    <span class="text-[#7A859E] line-through ${element.new_price ? "" : "hidden"}">${element.old_price}$</span>
                 </div>
                 </div>
                 `
