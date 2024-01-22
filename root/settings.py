@@ -182,11 +182,11 @@ SWAGGER_SETTINGS = {
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.yandex.ru'
-EMAIL_PORT = 465  # Используйте 465 для SSL, 587 для TLS
-EMAIL_USE_SSL = True  # Используйте True для SSL, False для TLS
-EMAIL_HOST_USER = 'nurdinovi@yandex.ru'  # Ваша почта на mail.ru
-EMAIL_HOST_PASSWORD = 'hifsfdlvruhkkzbn'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'zeon.web.test@gmail.com'
+EMAIL_HOST_PASSWORD = 'ryxv vngd mfnv dmjy'
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER

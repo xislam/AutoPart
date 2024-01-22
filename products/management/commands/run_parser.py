@@ -4,7 +4,7 @@ import googletrans
 import requests
 from django.core.management.base import BaseCommand
 from requests_html import AsyncHTMLSession, HTMLResponse, HTML
-from products.models import Product, Category, CarName, CarMake
+from products.models import Product, Category, CarName, CarMake, ExchangeRates
 
 url_page = "https://m.gparts.co.kr/display/showSearchDisplayList.mo?searchKeyword=&keyword=&producers_cd=&model_class_cd=&year_model=&part_cd=&maker=&carmodel=&model=&year=&part=&rowPage=10&sortType=A&idxNum=0&pageIdx="
 url_product = "https://m.gparts.co.kr/goods/viewGoodsInfo.mo?goodsCd="
@@ -19,7 +19,11 @@ def get_usd_to_krw():
 
 usd_to_krw = get_usd_to_krw()
 
-print(usd_to_krw)
+rate = ExchangeRates.objects.first()
+
+percentage_field = 30
+if rate is not None:
+    percentage_field = float(rate.percentage_field)
 
 
 def get_translate(text, dest="ru", src='ko', count=1):
@@ -94,7 +98,7 @@ async def parse_page(asession: AsyncHTMLSession, product_id: int, product_price:
         product.v_i_n = data[3] if "없음" not in data[3] else "не существует"
         product.code_product = result[4]
         product.product_information = result[5]
-        product.old_price = product_price / usd_to_krw
+        product.old_price = (product_price / usd_to_krw) * (1 + percentage_field / 100)
         product.price_in_won = product_price
 
         await product.asave()
