@@ -1,6 +1,7 @@
 import asyncio
 import time
 import googletrans
+import requests
 from django.core.management.base import BaseCommand
 from requests_html import AsyncHTMLSession, HTMLResponse, HTML
 from products.models import Product, Category, CarName, CarMake
@@ -8,9 +9,17 @@ from products.models import Product, Category, CarName, CarMake
 url_page = "https://m.gparts.co.kr/display/showSearchDisplayList.mo?searchKeyword=&keyword=&producers_cd=&model_class_cd=&year_model=&part_cd=&maker=&carmodel=&model=&year=&part=&rowPage=10&sortType=A&idxNum=0&pageIdx="
 url_product = "https://m.gparts.co.kr/goods/viewGoodsInfo.mo?goodsCd="
 
-won_to_usd = 0.00075
-
 translator = googletrans.Translator()
+
+
+def get_usd_to_krw():
+    url = "http://apilayer.net/api/live?access_key=823de40ffa61b048db0ba301f21a5331&currencies=KRW&source=USD&format=1"
+    return float(requests.get(url).json().get("quotes").get("USDKRW")) - 20
+
+
+usd_to_krw = get_usd_to_krw()
+
+print(usd_to_krw)
 
 
 def get_translate(text, dest="ru", src='ko', count=1):
@@ -77,7 +86,7 @@ async def parse_page(asession: AsyncHTMLSession, product_id: int, product_price:
         car_info = result[1].split("/")
         product.car_info = (await CarName.objects.aget_or_create(
             car_name=car_info[1],
-            car_make=(await CarMake.objects.aget_or_create(make=car_info[1]))[0]
+            car_make=(await CarMake.objects.aget_or_create(make=car_info[0]))[0]
         ))[0]
         product.model_year = data[2].split("/")[0]
         product.detail_number = data[2].split("/")[1] if "없음" not in data[2].split("/")[1] else "не существует"
@@ -85,7 +94,7 @@ async def parse_page(asession: AsyncHTMLSession, product_id: int, product_price:
         product.v_i_n = data[3] if "없음" not in data[3] else "не существует"
         product.code_product = result[4]
         product.product_information = result[5]
-        product.old_price = (product_price + 20) * won_to_usd
+        product.old_price = product_price / usd_to_krw
         product.price_in_won = product_price
 
         await product.asave()
@@ -131,7 +140,6 @@ async def main(start_page):
     while False not in out:
         await asyncio.gather(*[parse_pages(asession, i) for i in range(start, start + step)])
         start = start + step
-
     print(time.time() - start_time)
 
 
