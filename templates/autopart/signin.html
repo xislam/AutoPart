@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css"  rel="stylesheet" />
+    <link rel="stylesheet" href="/styles/style.css">
+    <title>Войти - Автозапчасти из Кореи</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .swiper-container {
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .swiper-slide {
+            text-align: center;
+            padding: 40px 0;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header start -->
+    <header>
+        <!-- Topbar start -->
+        <div class="h-[80px] overflow-hidden sm:h-[76px] w-full flex px-4 sm:px-10 lg:px-[108px] justify-between items-center shadow-md">
+            <ul class="w-full hidden md:flex items-center gap-5 lg:gap-[60px] font-semibold ">
+                <li><a href="">Свяжитесь с нами</a></li>
+                <li><a href="/signup.html">Зарегистрироваться</a></li>
+                <li><a href="">Стать участником</a></li>
+                <li><a href="/profile.html">Профиль</a></li>
+            </ul>
+            <svg width="32" height="32" id="open_burger" class="block md:hidden" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M27.9999 15.833C28.2761 15.833 28.4999 15.6091 28.4999 15.333C28.4999 15.0569 28.2761 14.833 27.9999 14.833H4C3.72386 14.833 3.5 15.0569 3.5 15.333C3.5 15.6091 3.72386 15.833 4 15.833H27.9999ZM27.9999 25.833C28.2761 25.833 28.4999 25.6091 28.4999 25.333C28.4999 25.0569 28.2761 24.833 27.9999 24.833H4C3.72386 24.833 3.5 25.0569 3.5 25.333C3.5 25.6091 3.72386 25.833 4 25.833H27.9999ZM27.9999 5.83301C28.2761 5.83301 28.4999 5.60915 28.4999 5.33301C28.4999 5.05687 28.2761 4.83301 27.9999 4.83301H4C3.72386 4.83301 3.5 5.05687 3.5 5.33301C3.5 5.60915 3.72386 5.83301 4 5.83301H27.9999Z" stroke="#7A859E" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <!-- burger -->
+            <div id="burger" class="fixed left-0 top-0 bg-black/20 z-50 w-full h-full hidden justify-start items-start ">
+                <div id="burblock" class="w-[310px] py-8 px-6 bg-white animateL">
+                    <div class="flex justify-between items-start mb-6">
+                        <h3 class="text-lg font-semibold">Меню</h3>
+                        <svg id="closeBurger" width="24" height="25" class="hover:bg-black/5 cursor-pointer" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M16.7908 8.71936C17.0697 8.44042 17.0697 7.98816 16.7908 7.70921C16.5118 7.43026 16.0596 7.43026 15.7806 7.70921L12 11.4898L8.21936 7.70921C7.94042 7.43026 7.48816 7.43026 7.20921 7.70921C6.93026 7.98816 6.93026 8.44042 7.20921 8.71936L10.9898 12.5L7.20921 16.2806C6.93026 16.5596 6.93026 17.0118 7.20921 17.2908C7.48816 17.5697 7.94042 17.5697 8.21936 17.2908L12 13.5102L15.7806 17.2908C16.0596 17.5697 16.5118 17.5697 16.7908 17.2908C17.0697 17.0118 17.0697 16.5596 16.7908 16.2806L13.0102 12.5L16.7908 8.71936Z" fill="#7A859E"/>
+                        </svg>
+                    </div>
+                    <ul class="flex flex-col items-start gap-6 font-semibold">
+                        <li><a href="">Свяжитесь с нами</a></li>
+                        <li><a href="">Стать участником</a></li>
+                        <li><a href="/profile.html">Профиль</a></li>
+                        <li><a href="/signup.html">Зарегистрироваться</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- burger -->
+            <a href="/index.html">
+                <img class="w-[127px] h-[117px] block sm:hidden" src="/images/logo.svg" alt="logo">
+            </a>
+            <div class="bg-[#F6F9FF] rounded-full p-2 cursor-pointer relative">
+                <svg width="29" height="29" id="cartIcon" class="" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 6H8.69584C9.28719 6 9.58234 6 9.81805 6.13129C9.91522 6.1856 10.0032 6.2553 10.0788 6.33776C10.2613 6.53788 10.3333 6.82906 10.4762 7.41141L10.666 8.18118C10.7713 8.60894 10.8245 8.82282 10.9058 9.00282C11.0449 9.30998 11.2544 9.57888 11.5167 9.78703C11.7791 9.99519 12.0868 10.1365 12.414 10.1993C12.6059 10.2353 12.8228 10.2353 13.2577 10.2353" stroke="#313141" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M21.6002 19.7644H10.7014C10.5501 19.7644 10.474 19.7644 10.4156 19.758C10.2708 19.7416 10.131 19.6946 10.0051 19.62C9.87933 19.5453 9.77031 19.4448 9.68512 19.3248C9.59993 19.2048 9.54045 19.068 9.51052 18.9232C9.48059 18.7784 9.48087 18.6289 9.51135 18.4842C9.53543 18.3905 9.56361 18.298 9.59583 18.2068C9.65006 18.0438 9.67614 17.9622 9.70638 17.8892C9.85485 17.5282 10.0989 17.216 10.4115 16.9872C10.7241 16.7584 11.093 16.6221 11.4773 16.5932C11.5545 16.5879 11.64 16.5879 11.8079 16.5879H17.4284" stroke="#313141" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M17.9798 16.5883H14.2732C13.005 16.5883 12.3709 16.5883 11.8817 16.2971C11.6755 16.1739 11.4917 16.0156 11.3383 15.8291C10.9733 15.3865 10.869 14.7512 10.6615 13.4817C10.4497 12.1952 10.3444 11.5515 10.5958 11.075C10.7003 10.8762 10.8454 10.7022 11.0213 10.5646C11.4426 10.2354 12.0851 10.2354 13.37 10.2354H20.3119C21.8241 10.2354 22.5803 10.2354 22.8869 10.7372C23.1925 11.2402 22.8535 11.9263 22.1777 13.2996L21.7115 14.2472C21.1504 15.3865 20.8699 15.9562 20.3661 16.2717C19.8613 16.5883 19.2345 16.5883 17.9798 16.5883Z" stroke="#313141" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M20.5576 24.0005C21.1336 24.0005 21.6005 23.5264 21.6005 22.9416C21.6005 22.3569 21.1336 21.8828 20.5576 21.8828C19.9816 21.8828 19.5146 22.3569 19.5146 22.9416C19.5146 23.5264 19.9816 24.0005 20.5576 24.0005Z" fill="#061F33"/>
+                    <path d="M12.2148 24.0005C12.7908 24.0005 13.2578 23.5264 13.2578 22.9416C13.2578 22.3569 12.7908 21.8828 12.2148 21.8828C11.6388 21.8828 11.1719 22.3569 11.1719 22.9416C11.1719 23.5264 11.6388 24.0005 12.2148 24.0005Z" fill="#061F33"/>
+                </svg>
+                <span id="totalIcon" class="absolute text-white bg-[#406EC7] block w-[20px] h-[20px] rounded-full text-sm text-center top-0 -right-2"></span>
+            </div>
+        </div>
+        <!-- Topbar end -->
+        <!-- Navbar start -->
+        <navbar class="py-10 sm:py-2 lg:py-5 px-4 sm:px-10 xl:px-[108px] flex flex-col overflow-hidden">
+            <div class="flex items-center flex-col lg:flex-row gap-4 lg:gap-0">
+                <div class="w-full hidden sm:flex items-center justify-between gap-0 xl:gap-[66px]">
+                    <a href="/index.html"><img class="w-[200px] h-[180px]" src="/images/logo.svg" alt="logo"></a>
+                    <div class="min-w-[280px] flex flex-col gap-4 ">
+                        <div class="flex items-center gap-2">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15.2477 16.11L16.9277 14.43C17.154 14.2066 17.4403 14.0536 17.7518 13.9897C18.0634 13.9258 18.3867 13.9537 18.6827 14.07L20.7302 14.8875C21.0293 15.0089 21.2858 15.2162 21.4673 15.4831C21.6488 15.75 21.7473 16.0647 21.7502 16.3875V20.1375C21.7485 20.3571 21.7023 20.5741 21.6145 20.7753C21.5267 20.9766 21.3991 21.158 21.2393 21.3087C21.0796 21.4594 20.891 21.5761 20.6849 21.652C20.4788 21.7278 20.2595 21.7612 20.0402 21.75C5.69272 20.8575 2.79772 8.70753 2.25022 4.05753C2.22481 3.82918 2.24803 3.59804 2.31836 3.37931C2.38869 3.16058 2.50453 2.95922 2.65827 2.78848C2.81201 2.61774 3.00016 2.48148 3.21034 2.38868C3.42052 2.29587 3.64797 2.24862 3.87772 2.25003H7.50022C7.82348 2.25099 8.13906 2.34863 8.40637 2.5304C8.67368 2.71217 8.8805 2.96976 9.00022 3.27003L9.81772 5.31753C9.93791 5.61233 9.96858 5.93601 9.90588 6.24814C9.84319 6.56027 9.68992 6.847 9.46522 7.07253L7.78522 8.75253C7.78522 8.75253 8.75272 15.3 15.2477 16.11Z" fill="#406EC7"/>
+                            </svg>
+                            <span>Служба поддержки {{ contact.phone_number }}</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 20C14.1217 20 16.1566 19.1571 17.6569 17.6569C19.1571 16.1566 20 14.1217 20 12C20 9.87827 19.1571 7.84344 17.6569 6.34315C16.1566 4.84285 14.1217 4 12 4C9.87827 4 7.84344 4.84285 6.34315 6.34315C4.84285 7.84344 4 9.87827 4 12C4 14.1217 4.84285 16.1566 6.34315 17.6569C7.84344 19.1571 9.87827 20 12 20ZM12 2C13.3132 2 14.6136 2.25866 15.8268 2.7612C17.0401 3.26375 18.1425 4.00035 19.0711 4.92893C19.9997 5.85752 20.7362 6.95991 21.2388 8.17317C21.7413 9.38642 22 10.6868 22 12C22 14.6522 20.9464 17.1957 19.0711 19.0711C17.1957 20.9464 14.6522 22 12 22C6.47 22 2 17.5 2 12C2 9.34784 3.05357 6.8043 4.92893 4.92893C6.8043 3.05357 9.34784 2 12 2ZM12.5 7V12.25L17 14.92L16.25 16.15L11 13V7H12.5Z" fill="#406EC7"/>
+                            </svg>
+                            <span>ПН-ПТ с 9:00~18:00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </navbar>
+        <!-- cart start -->
+        <div id="cart" class="fixed right-0 top-0 bg-black/20 w-full h-full hidden z-50 justify-end items-start">
+            <div id="cartBlock" class="w-[618px] p-10 round bg-white animate-right">
+                <div class="flex justify-between items-start mb-6">
+                    <h3 class="text-lg font-semibold">Категории</h3>
+                    <svg id="closeCart" width="24" height="25" class="hover:bg-black/5 cursor-pointer" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16.7908 8.71936C17.0697 8.44042 17.0697 7.98816 16.7908 7.70921C16.5118 7.43026 16.0596 7.43026 15.7806 7.70921L12 11.4898L8.21936 7.70921C7.94042 7.43026 7.48816 7.43026 7.20921 7.70921C6.93026 7.98816 6.93026 8.44042 7.20921 8.71936L10.9898 12.5L7.20921 16.2806C6.93026 16.5596 6.93026 17.0118 7.20921 17.2908C7.48816 17.5697 7.94042 17.5697 8.21936 17.2908L12 13.5102L15.7806 17.2908C16.0596 17.5697 16.5118 17.5697 16.7908 17.2908C17.0697 17.0118 17.0697 16.5596 16.7908 16.2806L13.0102 12.5L16.7908 8.71936Z" fill="#7A859E"/>
+                    </svg>
+                </div>
+                <div id="cartsProduct" class="h-[400px] overflow-y-scroll">
+                    
+                </div>
+                <div class="w-full h-[1px] bg-[#E3E5EE]"></div>
+                <div class="flex justify-between py-10">
+                    <h2 class="font-medium text-lg">Total</h2>
+                    <span id="totalCost" class="font-semibold text-lg"></span>
+                </div>
+                <button id="linkOrder" class="bg-[#406EC7] rounded-md text-white font-semibold py-3 w-full">Check out</button>
+            </div>
+        </div>
+        <!-- cart end -->
+    </header>
+    <!-- Header end -->
+    <!-- section start -->
+    <section class="flex flex-col items-center px-4 lg:px-20">
+        <h2 class="font-semibold text-2xl md:text-4xl mb-[60px]">Войти в аккаунт</h2>
+        <form action="" class="w-full lg:w-[1024px] flex flex-col gap-4">
+            <input id="signLogin" class="w-full h-[46px] rounded-md border px-4 py-3 border-[#E3E5EE]" placeholder="Email или номер телефона" type="email">
+            <input id="signPass" class="w-full h-[46px] rounded-md border px-4 py-3 border-[#E3E5EE]" placeholder="Пароль" type="password">
+        </form>
+        <button id="signBtn" class="py-3 w-full mt-[60px] sm:w-[436px] bg-[#406EC7] hover:opacity-80 rounded-lg text-white ">Войти</button>
+        <p class="my-10">У вас нет аккаунта? <a class="text-[#406EC7]" href="/signup.html">Регистрация</a></p>
+    </section>
+    <!-- section end -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
+    <script src="/scripts/signin.js"></script>
+    <script src="/scripts/carts.js"></script>
+    <script>
+        const open_burger = document.getElementById("open_burger")
+        const burger = document.getElementById("burger")
+        const burblock = document.getElementById("burblock")
+        const closeBurger = document.getElementById("closeBurger")
+
+        open_burger.addEventListener("click", () => {
+            burger.classList.remove("hidden")
+            burger.classList.add("flex")
+            burblock.classList.remove("animatL")
+            burblock.classList.add("animateR")
+        })
+
+        closeBurger.addEventListener("click", () => {
+            burblock.classList.add("animateL")
+            burblock.classList.remove("animateR")
+            setTimeout(() => {
+                burger.classList.add("hidden")
+                burger.classList.add("flex")
+            }, 500)
+        })
+    </script>
+</body>
+</html>

@@ -76,3 +76,27 @@ class FavoriteProduct(models.Model):
     class Meta:
         unique_together = ['user', 'product']
 
+
+
+class SocialNetwork(models.Model):
+    title = models.CharField(max_length=40, verbose_name='заголовок')
+    instagram = models.URLField(verbose_name='Instagram')
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'соцсети'
+        verbose_name_plural = 'соцсети'
+
+
+class Contacts(models.Model):
+    phone_number = models.CharField(max_length=13, verbose_name='Номер телефона')
+    email = models.EmailField()
+
+    def __str__(self):
+        return self.phone_number
+
+    class Meta:
+        verbose_name = 'Контакты'
+        verbose_name_plural = 'Контакты'
