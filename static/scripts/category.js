@@ -23,8 +23,8 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             data.forEach((item) => {
-                const li = document.createElement("li")
-                li.classList = "uppercase text-end"
+                const li = document.createElement("p")
+                li.classList = "uppercase text-end hover:bg-black/10"
                 li.textContent = item.name
                 li.setAttribute("onclick", `prodLink('${item.name + ','}')`)
                 mobcat.appendChild(li)
