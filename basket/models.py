@@ -27,7 +27,7 @@ class Order(models.Model):
     create_date = models.DateTimeField(auto_now_add=True, verbose_name='Создания')
 
     def __str__(self):
-        return self.user.name
+        return self.name
 
     class Meta:
 
