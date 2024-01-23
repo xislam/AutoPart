@@ -148,8 +148,9 @@ input[type="checkbox"]:checked+label {
     </header>
     <!-- Header end -->
     <!-- section start -->
-    <section class="flex flex-col items-center px-4 lg:px-20">
+    <section class="flex flex-col items-center px-4 lg:px-20 relative">
         <h2 class="font-semibold text-2xl md:text-4xl mb-[60px]">Войти в аккаунт</h2>
+        <p id="invalid" class="absolute top-16 text-xs text-[#F11313] hidden">*Неправильный пароль или логин</p>
         <form action="" class="w-full lg:w-[1024px] flex flex-col gap-6">
             <div class="relative">
                 <p id="emailPass" class="absolute right-0 -top-5 text-xs text-[#F11313] hidden">*Введите email</p>
