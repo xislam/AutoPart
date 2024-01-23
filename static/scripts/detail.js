@@ -93,6 +93,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById("color").textContent = data.product.external_color
                 document.getElementById("year").textContent = data.product.model_year
                 document.getElementById("mainPhoto").src = data.product.fotos[0]
+                document.getElementById("make_car").textContent = data.product.car_info.car_make.make
+                document.getElementById("model_car").textContent = data.product.car_info.car_name
                 document.getElementById("photo1").src = data.product.fotos[1]
                 document.getElementById("photo2").src = data.product.fotos[2]
                 document.getElementById("photo3").src = data.product.fotos[3]

@@ -106,8 +106,8 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById("profile").classList.add("hidden")
         document.getElementById("sign2").classList.remove("hidden")
         document.getElementById("sign1").classList.remove("hidden")
-        document.getElementById("auth2").classList.add("hidden")
-        document.getElementById("auth1").classList.add("hidden")
+        document.getElementById("auth2").classList.remove("hidden")
+        document.getElementById("auth1").classList.remove("hidden")
     }
 
     document.getElementById("profile").addEventListener('click', () => {
