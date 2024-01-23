@@ -120,6 +120,7 @@ document.addEventListener('DOMContentLoaded', function () {
             return response.json();
         })
         .then(data => {
+            document.getElementById("names").textContent = data.name + " " + data.surname
             document.getElementById("name").value = data.name
             document.getElementById("surname").value = data.surname
             document.getElementById("email").value = data.email
