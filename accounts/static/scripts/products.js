@@ -187,7 +187,7 @@ function cardData(data) {
         const div = document.createElement("div");
         div.classList = "w-full sm:w-[220px] flex flex-col gap-6 shadow-sm rounded-md p-3 ";
         div.innerHTML = `
-                    <a href="api/detail/?id=${item.id}" id="twoPhoto">
+                    <a href="/api/detail/?id=${item.id}" id="twoPhoto">
                         <img src=${item.fotos[0]} id="productImg" class="w-full rounded-md hover:opacity-80 sm:w-[220px] h-[350px] sm:h-[220px] object-cover cursor-pointer" alt="img">
                         <img src=${item.fotos[1]} id="productImg1" class="w-full rounded-md hover:opacity-80 sm:w-[220px] h-[350px] sm:h-[220px] object-cover cursor-pointer hidden" alt="img">
                     </a>
