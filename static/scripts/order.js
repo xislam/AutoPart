@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', function () {
             additional_address: address1.value,
             city: city.value,
             phone: phone.value,
-            total: total,
+            total: total.toFixed(2),
             product: products,
             status: 'в_обработке'
         }
