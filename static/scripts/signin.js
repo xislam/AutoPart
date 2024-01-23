@@ -79,10 +79,15 @@ signBtn.addEventListener("click", () => {
             .then(response => response.json())
             .then(data => {
                 console.log(data);
-                setSecureCookie('userData', JSON.stringify(data), 30);
-                setTimeout(() => {
-                    window.location.href = '/'
-                }, 1000)
+                if (data.detail) {
+                    document.getElementById("invalid").classList.remove("hidden")
+                } else {
+                    setSecureCookie('userData', JSON.stringify(data), 30);
+                    document.getElementById("invalid").classList.add("hidden")
+                    setTimeout(() => {
+                        window.location.href = '/index.html'
+                    }, 1000)
+                }
             })
             .catch(error => {
                 console.error('Ошибка:', error);
