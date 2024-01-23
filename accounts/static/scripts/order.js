@@ -102,6 +102,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function setCookies(name, value) {
         document.cookie = `${name}=${JSON.stringify(value)}; expires=Thu, 01 Jan 2030 00:00:00 UTC; path=/`;
     }
+
     let products = []
 
     function updateCart() {
@@ -159,12 +160,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const url = 'https://seoulgarage.com/api/orders/';
 
+        let tokens = user ? {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + user.access_token,
+        } : {
+            'Content-Type': 'application/json',
+        }
+
         if (agree.checked) {
             fetch(url, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: tokens,
                 body: JSON.stringify(obj),
             })
                 .then(response => response.json())
