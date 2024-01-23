@@ -1,3 +1,4 @@
+from django import forms
 from django.contrib import admin
 
 # Register your models here.
@@ -7,7 +8,11 @@ from products.models import Product
 
 class ProductInline(admin.TabularInline):
     model = Order.product.through
+    verbose_name_plural = 'Products'
+    verbose_name = 'Product'
     extra = 1
+
+    template = 'admin/product_change_form.html'
 
 
 class OrderAdmin(admin.ModelAdmin):
