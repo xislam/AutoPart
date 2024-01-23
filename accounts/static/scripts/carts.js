@@ -87,6 +87,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     document.getElementById("profile").addEventListener('click', () => {
-        window.location.href = "/api/profile_html/"
+        window.location.href = "/api/profile_html"
     })
 });

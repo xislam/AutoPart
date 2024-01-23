@@ -187,7 +187,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                     const div = document.createElement("div")
                                     div.classList = "flex flex-col gap-4 overflow-hidden w-[768px] md:w-[300px] lg:w-[380px] shadow-sm rounded-md pb-12 relative"
                                     div.innerHTML = `
-                                <a href="/detail.html?id=${element.id}">
+                                <a href="/api/detail?id=${element.id}">
                                     <img src=${element.fotos[0]} class="w-[768px] md:w-[300px] lg:w-[380px] sm:h-[380px] h-[280px] md:h-[300px] lg:h-[380px] hover:opacity-80 object-cover rounded-md" alt="product">
                                 </a>
                                 <h3 class="text-lg px-2 sm:text-xl font-semibold">${element.name_product}</h3>
@@ -235,7 +235,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                     const div = document.createElement("div")
                                     div.classList = "flex flex-col gap-4 overflow-hidden w-[768px] md:w-[300px] lg:w-[380px] shadow-sm rounded-md pb-12 relative"
                                     div.innerHTML = `
-                                <a href="/detail.html?id=${element.id}">
+                                <a href="/api/detail?id=${element.id}">
                                     <img src=${element.fotos[0]} class="w-[768px] md:w-[300px] lg:w-[380px] sm:h-[380px] h-[280px] md:h-[300px] lg:h-[380px] hover:opacity-80 object-cover rounded-md" alt="product">
                                 </a>
                                 <h3 class="text-lg px-2 sm:text-xl font-semibold">${element.name_product}</h3>
