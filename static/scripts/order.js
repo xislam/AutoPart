@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function () {
             productsItem.appendChild(div);
             totalSum += +item.price;
         });
-        document.getElementById("priceTotal").textContent = totalSum + '$'
+        document.getElementById("priceTotal").textContent = totalSum.toFixed(2) + '$'
         document.getElementById("itemSum").textContent = cartItems.length
     }
 

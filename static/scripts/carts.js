@@ -50,7 +50,7 @@ function updateCart() {
         total += +item.price;
     });
 
-    totalElement.textContent = `${total}$`;
+    totalElement.textContent = `${total.toFixed(2)}$`;
 }
 
 function getCookies(name) {
