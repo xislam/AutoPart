@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log(object)
 
         setSecureCookie('filterItem', JSON.stringify(object), 30)
-        window.location.href = "/products.html"
+        window.location.href = "/api/products_html/"
     }
 
     btnSearch.addEventListener("click", () => {
@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log(object)
 
             setSecureCookie('searchItem', JSON.stringify(object), 30)
-            window.location.href = "/products.html"
+            window.location.href = "/api/products_html/"
         }
     })
 });
