@@ -15,7 +15,7 @@ class Order(models.Model):
         ('не_оплачено', 'Не оплачено'),
     ]
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Пользователь')
-    neme = models.CharField(max_length=120, verbose_name='Имя')
+    name = models.CharField(max_length=120, verbose_name='Имя')
     surname = models.CharField(max_length=120, verbose_name='Фамилия')
     address = models.CharField(max_length=120, verbose_name='Адрес')
     additional_address = models.CharField(max_length=120, verbose_name='Дополнительный адрес', null=True, blank=True)
