@@ -86,7 +86,7 @@ btn_auth.addEventListener("click", () => {
         dateErr.classList.remove("hidden")
         return;
     }
-    if (phone_number.value.trim() === '') {
+    if (number_phone.value.trim() === '') {
         phoneErr.classList.remove("hidden")
         return;
     }
