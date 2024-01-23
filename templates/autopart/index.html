@@ -359,7 +359,9 @@
                 car_info__car_name__icontains: model.value,
                 model_year__gte: startDate.value,
                 model_year__lte: endDate.value,
-                name_product: part.value
+                name_product: part.value,
+                page: 1,
+                page_size: 16
             }
 
             console.log(object)
