@@ -6,9 +6,16 @@ from products.models import Product
 
 
 class OrderSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault(), required=False)
+
     class Meta:
         model = Order
-        exclude = ['user']
+        fields = '__all__'
+
+    def create(self, validated_data):
+        user = self.context['request'].user if self.context['request'].user.is_authenticated else None
+        validated_data['user'] = user
+        return super(OrderSerializer, self).create(validated_data)
 
 
 class OrderListSerializer(serializers.ModelSerializer):
