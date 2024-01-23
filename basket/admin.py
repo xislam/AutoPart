@@ -2,5 +2,21 @@ from django.contrib import admin
 
 # Register your models here.
 from basket.models import Order
+from products.models import Product
 
-admin.site.register(Order)
+
+class ProductInline(admin.TabularInline):
+    model = Order.product.through
+    extra = 1
+
+
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'surname', 'status', 'create_date')
+    list_filter = ('status', 'create_date')
+    search_fields = ('name', 'surname', 'phone', 'status')
+    date_hierarchy = 'create_date'
+    ordering = ('-create_date',)
+    inlines = [ProductInline]
+
+
+admin.site.register(Order, OrderAdmin)
