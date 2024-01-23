@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
 
         let obj = {
-            neme: names.value,
+            name: names.value,
             surname: surnames.value,
             address: address.value,
             additional_address: address1.value,
