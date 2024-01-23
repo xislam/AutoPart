@@ -1,8 +1,9 @@
 from django.urls import path
 
+from accounts.views import DetailHTMLView
 from products.api import ProductListView, CarMakeListView, CarNameListView, PopularProductListView, CategoryListView, \
     ProductDetailView, ProductSearchView, CategoryListView2
-from products.views import ProductsHTMLView
+from products.views import ProductsHTMLView, OrderpageHTMLView
 
 urlpatterns = [
     path('products/', ProductListView.as_view(), name='product-list'),
@@ -15,5 +16,7 @@ urlpatterns = [
     path('products/<int:id>/', ProductDetailView.as_view(), name='product-detail'),
 
     path('products_html/', ProductsHTMLView.as_view(), name='products'),
+    path('products_html/api/detail/', DetailHTMLView.as_view(), name='detail'),
+    path('orderpage/', OrderpageHTMLView.as_view(), name='orderpage')
 
 ]

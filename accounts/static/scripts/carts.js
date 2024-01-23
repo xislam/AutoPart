@@ -69,5 +69,5 @@ setInterval(() => {
 
 
 document.getElementById("linkOrder").addEventListener("click", () => {
-    window.location.href = '/orderpage.html'
+    window.location.href = '/api/orderpage'
 })

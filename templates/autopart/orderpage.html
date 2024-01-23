@@ -1,10 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css"  rel="stylesheet" />
-    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="{% static 'styles/style.css' %}">
     <title>Автозапчасти из Кореи</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -31,7 +32,7 @@ input[type="checkbox"]+label {
     /* Ширина картинки */
     min-height: 20px;
     /* Высота картинки */
-    background-image: url(/images/uncheck.png);
+    background-image: url({% static 'images/uncheck.png' %});
     /* Путь к изображению неотмеченного чекбокса */
     background-size: cover;
     /* Растягиваем изображение, чтобы оно занимало всю площадь */
@@ -40,7 +41,7 @@ input[type="checkbox"]+label {
 
 /* Обновляем картинку при отметке чекбокса */
 input[type="checkbox"]:checked+label {
-    background-image: url(/images/checked.png);
+    background-image: url({% static 'images/checked.png' %});
     /* Путь к изображению отмеченного чекбокса */
 }
     </style>
@@ -52,9 +53,9 @@ input[type="checkbox"]:checked+label {
         <div class="h-[80px] overflow-hidden sm:h-[76px] w-full flex px-4 sm:px-10 lg:px-[108px] justify-between items-center shadow-md">
             <ul class="w-full hidden md:flex items-center gap-5 lg:gap-[60px] font-semibold ">
                 <li><a href="">Свяжитесь с нами</a></li>
-                <li><a href="/signup.html">Зарегистрироваться</a></li>
+                <li><a href="{% url 'signup_html' %}">Зарегистрироваться</a></li>
                 <li><a href="">Стать участником</a></li>
-                <li><a href="/profile.html">Профиль</a></li>
+                <li><a href="{% url 'profile_html' %}">Профиль</a></li>
             </ul>
             <svg width="32" height="32" id="open_burger" class="block md:hidden" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M27.9999 15.833C28.2761 15.833 28.4999 15.6091 28.4999 15.333C28.4999 15.0569 28.2761 14.833 27.9999 14.833H4C3.72386 14.833 3.5 15.0569 3.5 15.333C3.5 15.6091 3.72386 15.833 4 15.833H27.9999ZM27.9999 25.833C28.2761 25.833 28.4999 25.6091 28.4999 25.333C28.4999 25.0569 28.2761 24.833 27.9999 24.833H4C3.72386 24.833 3.5 25.0569 3.5 25.333C3.5 25.6091 3.72386 25.833 4 25.833H27.9999ZM27.9999 5.83301C28.2761 5.83301 28.4999 5.60915 28.4999 5.33301C28.4999 5.05687 28.2761 4.83301 27.9999 4.83301H4C3.72386 4.83301 3.5 5.05687 3.5 5.33301C3.5 5.60915 3.72386 5.83301 4 5.83301H27.9999Z" stroke="#7A859E" stroke-linecap="round" stroke-linejoin="round"/>
@@ -71,14 +72,14 @@ input[type="checkbox"]:checked+label {
                     <ul class="flex flex-col items-start gap-6 font-semibold">
                         <li><a href="">Свяжитесь с нами</a></li>
                         <li><a href="">Стать участником</a></li>
-                        <li><a href="/profile.html">Профиль</a></li>
-                        <li><a href="/signup.html">Зарегистрироваться</a></li>
+                        <li><a href="{% url 'profile_html' %}">Профиль</a></li>
+                        <li><a href="{% url 'signup_html' %}">Зарегистрироваться</a></li>
                     </ul>
                 </div>
             </div>
             <!-- burger -->
-            <a href="/index.html">
-                <img class="w-[127px] h-[117px] block sm:hidden" src="/images/logo.svg" alt="logo">
+            <a href="{% url 'index' %}">
+                <img class="w-[127px] h-[117px] block sm:hidden" src="{% static 'images/logo.svg' %}" alt="logo">
             </a>
             <div class="bg-[#F6F9FF] rounded-full p-2 cursor-pointer relative">
                 <svg width="29" height="29" id="cartIcon" class="" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -96,14 +97,14 @@ input[type="checkbox"]:checked+label {
         <navbar class="py-10 sm:py-2 lg:py-5 px-4 sm:px-10 xl:px-[108px] flex flex-col overflow-hidden">
             <div class="flex items-center flex-col lg:flex-row gap-4 lg:gap-0">
                 <div class="hidden sm:flex items-center justify-between w-full lg:hidden">
-                    <a href="/index.html"><img class="w-[200px] h-[150px] block lg:hidden" src="/images/logo.svg" alt="logo"></a>
+                    <a href="{% url 'index' %}"><img class="w-[200px] h-[150px] block lg:hidden" src="{% static 'images/logo.svg' %}" alt="logo"></a>
                     <svg id="openCat2" width="32" height="32" class="cursor-pointer" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M28.0003 16.6978C28.1936 16.6978 28.3503 16.5411 28.3503 16.3478C28.3503 16.1545 28.1936 15.9978 28.0003 15.9978H11.8789C11.6856 15.9978 11.5289 16.1545 11.5289 16.3478C11.5289 16.5411 11.6856 16.6978 11.8789 16.6978H28.0003ZM28.0003 25.5095C28.1936 25.5095 28.3503 25.3528 28.3503 25.1595C28.3503 24.9662 28.1936 24.8095 28.0003 24.8095H11.8789C11.6856 24.8095 11.5289 24.9662 11.5289 25.1595C11.5289 25.3528 11.6856 25.5095 11.8789 25.5095H28.0003ZM28.0003 7.88613C28.1936 7.88613 28.3503 7.72943 28.3503 7.53613C28.3503 7.34283 28.1936 7.18613 28.0003 7.18613H11.8789C11.6856 7.18613 11.5289 7.34283 11.5289 7.53613C11.5289 7.72943 11.6856 7.88613 11.8789 7.88613H28.0003Z" stroke="#7A859E" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"/>
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M4.96774 9.73884C6.11926 9.73884 7.27079 8.63738 7.27079 7.53592C7.27079 6.43447 6.11926 5.33301 4.96774 5.33301C3.81621 5.33301 2.66699 6.43447 2.66699 7.53592C2.66699 8.63738 3.81621 9.73884 4.96774 9.73884ZM4.96774 18.5505C6.11926 18.5505 7.27079 17.4491 7.27079 16.3476C7.27079 15.2461 6.11926 14.1447 4.96774 14.1447C3.81621 14.1447 2.66699 15.2461 2.66699 16.3476C2.66699 17.4491 3.81621 18.5505 4.96774 18.5505ZM4.96774 27.3622C6.11926 27.3622 7.27079 26.2607 7.27079 25.1593C7.27079 24.0578 6.11926 22.9563 4.96774 22.9563C3.81621 22.9563 2.66699 24.0578 2.66699 25.1593C2.66699 26.2607 3.81621 27.3622 4.96774 27.3622Z" fill="#7A859E"/>
                     </svg>
                 </div>
                 <div class="w-full flex items-center gap-4 xl:gap-[66px]">
-                    <a href="/index.html"><img class="w-[340px] h-[180px] hidden lg:block" src="/images/logo.svg" alt="logo"></a>
+                    <a href="{% url 'index' %}"><img class="w-[340px] h-[180px] hidden lg:block" src="{% static 'images/logo.svg' %}" alt="logo"></a>
                     <div class="relative w-full">
                         <span id="errorValid" class="text-xs absolute -top-5 text-[#F11313] hidden right-0">*Введите название продукта</span>
                         <input id="search" type="search" class="border border-[#E3E5EE] rounded-sm w-full pr-10" placeholder="Поиск" >
@@ -137,7 +138,7 @@ input[type="checkbox"]:checked+label {
         <div class="w-full xl:w-[1224px] my-0 mx-auto h-[100px] hidden lg:block flex flex-col relative overflow-hidden">
             <div id="categoris" class="mySwiper w-[1224px] flex items-center py-5 pr-10 overflow-x-scroll" init="false">
             </div>
-            <img src="/images/right.svg" class="w-10 absolute top-5 bg-white p-1 right-0 z-50 blinking-img" alt="">
+            <img src="{% static 'images/right.svg' %}" class="w-10 absolute top-5 bg-white p-1 right-0 z-50 blinking-img" alt="">
         </div>
         <!-- Navbar end -->
         <!-- categories start -->
@@ -232,7 +233,7 @@ input[type="checkbox"]:checked+label {
                 <p class="text-base sm:text-lg font-semibold">Ваш заказ успешно оформлен</p>
                 <p class="text-sm sm:text-base font-bold">Ожидайте прибытия вашего заказа</p>
             </div>
-            <a href="/index.html" class="text-white bg-[#406EC7] py-3 w-full text-center rounded-md mt-10">Вернуться в главное меню</a>
+            <a href="{% url 'index'%}" class="text-white bg-[#406EC7] py-3 w-full text-center rounded-md mt-10">Вернуться в главное меню</a>
         </div>
     </div>
     <div id="spinner" class="fixed right-0 top-0 bg-black/20 p-4 w-full h-full hidden z-50 justify-center items-center">
@@ -282,9 +283,9 @@ input[type="checkbox"]:checked+label {
     <!-- footer end -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
-    <script src="/scripts/index.js"></script>
-    <script src="/scripts/order.js"></script>
-    <script src="/scripts/carts.js"></script>
-    <script src="/scripts/category.js"></script>
+    <script src="{% static 'scripts/index.js' %}"></script>
+    <script src="{% static 'scripts/order.js' %}"></script>
+    <script src="{% static 'scripts/carts.js' %}"></script>
+    <script src="{% static 'scripts/category.js' %}"></script>
 </body>
 </html>

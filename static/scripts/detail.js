@@ -323,7 +323,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         console.error('Произошла ошибка:', error);
                     });
             } else {
-                window.location.href = '/signin.html'
+                window.location.href = '/api/signin_html'
             }
         }
 

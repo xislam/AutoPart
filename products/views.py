@@ -28,3 +28,15 @@ class ProductsHTMLView(TemplateView):
         context['contact'] = Contacts.objects.first()
 
         return context
+
+
+class OrderpageHTMLView(TemplateView):
+    template_name = 'autopart/orderpage.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['social_network'] = SocialNetwork.objects.first()
+        context['contact'] = Contacts.objects.first()
+
+        return context

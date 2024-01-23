@@ -28,3 +28,27 @@ class SigninHTMLView(TemplateView):
         context['contact'] = Contacts.objects.first()
 
         return context
+
+
+class DetailHTMLView(TemplateView):
+    template_name = 'autopart/detail.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['social_network'] = SocialNetwork.objects.first()
+        context['contact'] = Contacts.objects.first()
+
+        return context
+
+
+class ProfileHTMLView(TemplateView):
+    template_name = 'autopart/profile.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['social_network'] = SocialNetwork.objects.first()
+        context['contact'] = Contacts.objects.first()
+
+        return context

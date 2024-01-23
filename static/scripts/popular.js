@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const div = document.createElement("swiper-slide")
                 div.innerHTML = `
                 <div class="flex flex-col gap-4 overflow-hidden" >
-                <a href="/detail.html?id=${element.id}">
+                <a href="/api/detail/?id=${element.id}">
                     <img src=${element.fotos[0]} class="w-[200px] hover:opacity-80 h-[200px] sm:w-[380px] sm:h-[380px] object-cover rounded-md" alt="product">
                 </a>
                 <h3 class="text-lg sm:text-xl font-semibold">${element.name_product}</h3>

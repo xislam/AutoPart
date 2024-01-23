@@ -1,3 +1,4 @@
+
 const productImg = document.getElementById("productImg");
 const filters = document.getElementById("filters")
 const filtersBlock = document.getElementById("filtersBlock")
@@ -25,15 +26,12 @@ let prever = '';
 
 var userfil = getSecureCookie('filterItem');
 let filterData = JSON.parse(userfil);
-console.log(filterData)
 
 var username = getSecureCookie('userData');
 let user = JSON.parse(username);
-console.log(user)
 
 var searchValue = getSecureCookie('searchItem');
 let search = JSON.parse(searchValue);
-console.log(search)
 
 let tokens = user ? {
     'Content-Type': 'application/json',
@@ -51,7 +49,6 @@ openFilter.addEventListener("click", () => {
 })
 
 closeFilter.addEventListener("click", () => {
-    filtersBlock.classList.remove("animate-right")
     filtersBlock.classList.add("animate-left")
     setTimeout(() => {
         filters.classList.add("hidden")
@@ -190,7 +187,7 @@ function cardData(data) {
         const div = document.createElement("div");
         div.classList = "w-full sm:w-[220px] flex flex-col gap-6 shadow-sm rounded-md p-3 ";
         div.innerHTML = `
-                    <a href="/detail.html?id=${item.id}" id="twoPhoto">
+                    <a href="api/detail/?id=${item.id}" id="twoPhoto">
                         <img src=${item.fotos[0]} id="productImg" class="w-full rounded-md hover:opacity-80 sm:w-[220px] h-[350px] sm:h-[220px] object-cover cursor-pointer" alt="img">
                         <img src=${item.fotos[1]} id="productImg1" class="w-full rounded-md hover:opacity-80 sm:w-[220px] h-[350px] sm:h-[220px] object-cover cursor-pointer hidden" alt="img">
                     </a>
@@ -217,8 +214,8 @@ function cardData(data) {
 
 async function handleUpdateData(token, filters, name) {
     try {
-        console.log(name);
         filters.name_product = name;
+        console.log(filters)
         const queryString = Object.keys(filters)
             .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(filters[key]))
             .join('&');
@@ -416,6 +413,7 @@ async function handleUpdateDataSearch(token, filters) {
             document.getElementById("placeProd").innerText = "Ничего не найдено";
         }
 
+
     } catch (error) {
         console.error('Error:', error);
     }
@@ -425,15 +423,12 @@ async function handleCategory() {
     try {
         var userfil = getSecureCookie('filterItem');
         let filterData = JSON.parse(userfil);
-        const resultArray = selectedValues.map(item => item.trim());
-        console.log(resultArray)
 
         if (filterData.car_info__car_name__icontains.trim() === "" && filterData.name_product.trim() === "") {
             document.getElementById("categor").innerHTML = ''
             setSecureCookie('filterItem', JSON.stringify(""), 30);
             const response = await fetch('https://seoulgarage.com/api/products_category/');
             const data = await response.json();
-            console.log(data);
 
             data.splice(0, 10).forEach(element => {
                 const div = document.createElement("div");
@@ -452,15 +447,16 @@ async function handleCategory() {
                     if (checkbox.checked) {
                         console.log(checkbox.value.split("?").join(" "))
                         selectedValues.push(checkbox.value.split("?").join(" "));
-                        handleUpdateData(tokens, filterData, resultArray.join(""));
+                        console.log('Выбранные значения:', selectedValues);
+                        handleUpdateData(tokens, filterData, selectedValues.map(item => item.trim()).join(""));
                     } else {
                         const index = selectedValues.indexOf(checkbox.value.split("?").join(" "));
                         console.log(index);
                         if (index !== -1) {
                             selectedValues.splice(index, 1);
+                            handleUpdateData(tokens, filterData, selectedValues.map(item => item.trim()).join(""));
                         }
                     }
-                    console.log('Выбранные значения:', selectedValues);
                 });
 
                 document.getElementById("categor").appendChild(div);
@@ -480,17 +476,18 @@ async function handleCategory() {
                 const checkbox = div.querySelector('input[type="checkbox"]');
                 checkbox.addEventListener('change', function () {
                     if (checkbox.checked) {
+                        console.log('Выбранные значения:', selectedValues);
                         console.log(checkbox.value.split("?").join(" "))
                         selectedValues.push(checkbox.value.split("?").join(" "));
-                        handleUpdateData(tokens, filterData, resultArray.join(""));
+                        handleUpdateData(tokens, filterData, selectedValues.map(item => item.trim()).join(""));
                     } else {
                         const index = selectedValues.indexOf(checkbox.value.split("?").join(" "));
                         console.log(index);
                         if (index !== -1) {
                             selectedValues.splice(index, 1);
+                            handleUpdateData(tokens, filterData, selectedValues.map(item => item.trim()).join(""));
                         }
                     }
-                    console.log('Выбранные значения:', selectedValues);
                 });
 
                 document.getElementById("filtBlock").appendChild(div);
@@ -500,8 +497,6 @@ async function handleCategory() {
             document.getElementById("categor").innerHTML = ''
             const response = await fetch(`https://seoulgarage.com/api/products_category/?car_name=${filterData.car_info__car_name__icontains}`);
             const data = await response.json();
-            console.log(data);
-
             data.splice(0, 10).forEach(element => {
                 const div = document.createElement("div");
                 div.classList = "flex items-center justify-between";
@@ -519,17 +514,17 @@ async function handleCategory() {
                     if (checkbox.checked) {
                         console.log(checkbox.value.split("?").join(" "))
                         selectedValues.push(checkbox.value.split("?").join(" "));
-                        handleUpdateData(tokens, filterData, resultArray.join(""));
+                        console.log('Выбранные значения:', selectedValues);
+                        handleUpdateData(tokens, filterData, selectedValues.map(item => item.trim()).join(""));
                     } else {
                         const index = selectedValues.indexOf(checkbox.value.split("?").join(" "));
                         console.log(index);
                         if (index !== -1) {
                             selectedValues.splice(index, 1);
+                            handleUpdateData(tokens, filterData, selectedValues.map(item => item.trim()).join(""));
                         }
                     }
-                    console.log('Выбранные значения:', selectedValues);
                 });
-
                 document.getElementById("categor").appendChild(div);
             });
             data.forEach(element => {
@@ -547,17 +542,19 @@ async function handleCategory() {
                 const checkbox = div.querySelector('input[type="checkbox"]');
                 checkbox.addEventListener('change', function () {
                     if (checkbox.checked) {
+                        console.log('Выбранные значения:', selectedValues);
                         console.log(checkbox.value.split("?").join(" "))
                         selectedValues.push(checkbox.value.split("?").join(" "));
-                        handleUpdateData(tokens, filterData, resultArray.join(""));
+                        handleUpdateData(tokens, filterData, selectedValues.map(item => item.trim()).join(""));
                     } else {
                         const index = selectedValues.indexOf(checkbox.value.split("?").join(" "));
                         console.log(index);
                         if (index !== -1) {
                             selectedValues.splice(index, 1);
+                            handleUpdateData(tokens, filterData, selectedValues.map(item => item.trim()).join(""));
+
                         }
                     }
-                    console.log('Выбранные значения:', selectedValues);
                 });
 
                 document.getElementById("filtBlock").appendChild(div);
@@ -688,7 +685,7 @@ const addFavorite = (productId) => {
             })
             .finally(() => preload());
     } else {
-        window.location.href = '/signin.html';
+        window.location.href = '/api/signin_html/';
     }
 };
 

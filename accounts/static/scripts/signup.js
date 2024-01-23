@@ -131,6 +131,6 @@ btn_auth.addEventListener("click", () => {
         });
 
     setTimeout(() => {
-        window.location.href = '/signin.html'
+        window.location.href = 'api/signin_html/'
     }, 1000)
 })
