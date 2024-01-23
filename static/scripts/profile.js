@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         </div>
                         <div class="font-semibold ">
                             <span class="font-normal text-[#313141] mb-2">Цена</span>
-                            <p>${item.product_info.new_price}$</p>
+                            <p>${item.product_info.new_price ? item.product_info.new_price : item.product_info.old_price}$</p>
                         </div>
                         <div class="sm:w-[120px] font-medium flex flex-col items-center" onclick="handleDelete(${item.id})">
                             <span class="font-normal text-[#313141] mb-2">Избранный</span>
@@ -257,7 +257,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         </div>
                         <div class="font-semibold ">
                             <span class="font-normal text-[#313141] mb-2">Цена</span>
-                            <p>${item.product_info.new_price}$</p> 
+                            <p>${item.product_info.new_price ? item.product_info.new_price : item.product_info.old_price}$</p> 
                         </div>
                         <div class="sm:w-[120px] font-medium flex flex-col items-center">
                             <span class="font-normal text-[#313141] mb-2">Избранный</span>
