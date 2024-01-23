@@ -71,3 +71,22 @@ setInterval(() => {
 document.getElementById("linkOrder").addEventListener("click", () => {
     window.location.href = '/api/orderpage'
 })
+
+document.addEventListener('DOMContentLoaded', function () {
+    var username = getSecureCookie('userData');
+    let user = JSON.parse(username);
+
+    if (user) {
+        document.getElementById("profile").classList.remove("hidden")
+        document.getElementById("sign2").classList.add("hidden")
+        document.getElementById("sign1").classList.add("hidden")
+    } else {
+        document.getElementById("profile").classList.add("hidden")
+        document.getElementById("sign2").classList.remove("hidden")
+        document.getElementById("sign1").classList.remove("hidden")
+    }
+
+    document.getElementById("profile").addEventListener('click', () => {
+        window.location.href = "/profile.html"
+    })
+});

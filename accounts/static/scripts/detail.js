@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
 
                 document.getElementById('btn_add').addEventListener('click', () => {
-                    console.log('mnknasfjak')
+                    document.getElementById('btn_add').textContent = 'Добавлено в корзину'
                     data.product.new_price ?
                         toggleProduct(data.product.id, data.product.name_product, data.product.new_price, data.product.fotos[0])
                         :
@@ -133,10 +133,10 @@ document.addEventListener('DOMContentLoaded', function () {
                         });
                     } else {
                         cartItems.splice(productIndex, 1);
+                        document.getElementById('btn_add').textContent = 'Добавить в корзину'
                     }
 
                     setCookies("cartItems", cartItems);
-
                 }
 
                 function findProductIndex(cartItems, productId) {
