@@ -124,12 +124,24 @@ btn_auth.addEventListener("click", () => {
         .then(response => response.json())
         .then(data => {
             console.log('Успешный ответ:', data);
+            if (data.email) {
+                emailErr.classList.remove("hidden")
+                emailErr.textContent = "Вот пример: example@mail.com"
+                return;
+            }
+            if (data.birthday) {
+                dateErr.classList.remove("hidden")
+                dateErr.textContent = "Введите корректную дату"
+                return;
+            }
+
+            dateErr.classList.add("hidden")
+            emailErr.classList.add("hidden")
+            setTimeout(() => {
+                window.location.href = '/signin.html'
+            }, 1000)
         })
         .catch(error => {
             console.error('Ошибка:', error);
         });
-
-    setTimeout(() => {
-        window.location.href = '/api/signin_html/'
-    }, 1000)
 })
