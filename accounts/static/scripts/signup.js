@@ -124,7 +124,6 @@ btn_auth.addEventListener("click", () => {
         .then(response => response.json())
         .then(data => {
             console.log('Успешный ответ:', data);
-            setSecureCookie('userData', JSON.stringify(data), 30);
         })
         .catch(error => {
             console.error('Ошибка:', error);
