@@ -85,7 +85,7 @@ signBtn.addEventListener("click", () => {
                     setSecureCookie('userData', JSON.stringify(data), 30);
                     document.getElementById("invalid").classList.add("hidden")
                     setTimeout(() => {
-                        window.location.href = '/index.html'
+                        window.location.href = '/'
                     }, 1000)
                 }
             })
