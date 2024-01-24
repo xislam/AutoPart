@@ -121,9 +121,12 @@ async def parse_pages(asession: AsyncHTMLSession, page=1):
             product_id = product.find("div.img a", first=True).attrs["href"][38:-4]
             product_price = product.find("div.textZone div.price", first=True).text
             product_price = product_price.replace("원", "").replace(",", "").replace(" ", "")
-            exist = await Product.objects.filter(product_id=product_id).aexists()
-            if not exist:
+            product = await Product.objects.filter(product_id=product_id).afirst()
+            if product is None:
                 products_job.append(parse_page(asession, product_id, float(product_price)))
+            else:
+                product.deleted = False
+                product.asave()
 
         if len(products_job) > 0:
             await asyncio.gather(*products_job)
@@ -155,4 +158,5 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         start_page = options["start_page"]
+        Product.objects.update(deleted=True)
         asyncio.run(main(start_page))

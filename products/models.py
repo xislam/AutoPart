@@ -74,6 +74,7 @@ class Product(models.Model):
     price_in_won = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Цена на вон', blank=True,
                                        null=True)
     new_price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Новая цена', null=True, blank=True)
+    deleted = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.name_product} '
