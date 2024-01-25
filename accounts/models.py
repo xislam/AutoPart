@@ -100,3 +100,14 @@ class Contacts(models.Model):
     class Meta:
         verbose_name = 'Контакты'
         verbose_name_plural = 'Контакты'
+
+
+class ChatId(models.Model):
+    chat_id = models.CharField(max_length=80, verbose_name='Чат ID')
+
+    def __str__(self):
+        return self.chat_id
+
+    class Meta:
+        verbose_name_plural = 'Чат ID'
+        verbose_name = 'Чат ID'

@@ -1,7 +1,11 @@
 from django.db import models
 
 # Create your models here.
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 from accounts.models import User
+from bot import send_order_notification
 from products.models import Product
 
 
@@ -30,6 +34,10 @@ class Order(models.Model):
         return self.name
 
     class Meta:
-
         verbose_name_plural = 'Заказы'
         verbose_name = 'Заказы'
+
+
+@receiver(post_save, sender=Order)
+def order_post_save(sender, instance, **kwargs):
+    send_order_notification(instance)

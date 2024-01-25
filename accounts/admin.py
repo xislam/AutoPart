@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 from accounts.forms import CustomUserCreationForm
-from accounts.models import User, Contacts, SocialNetwork
+from accounts.models import User, Contacts, SocialNetwork, ChatId
 
 
 class CustomUserAdmin(UserAdmin):
@@ -67,3 +67,4 @@ class CustomUserAdmin(UserAdmin):
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(Contacts)
 admin.site.register(SocialNetwork)
+admin.site.register(ChatId)
