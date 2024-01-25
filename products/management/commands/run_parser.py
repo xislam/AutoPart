@@ -142,13 +142,13 @@ async def parse_pages(asession: AsyncHTMLSession, page=1):
 
 
 async def main(start_page):
-    asession = AsyncHTMLSession(loop=asyncio.get_running_loop())
     out = True
     start = start_page
     start_time = time.time()
 
     while False is not out:
         try:
+            asession = AsyncHTMLSession(loop=asyncio.get_running_loop())
             print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
             task = asyncio.create_task(parse_pages(asession, start))
             done, pending = await asyncio.wait([task], timeout=500)
@@ -157,7 +157,6 @@ async def main(start_page):
             else:
                 task.cancel()
                 continue
-            out = True
             if None is out:
                 time.sleep(500)
                 continue
