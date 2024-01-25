@@ -5,6 +5,7 @@ import requests
 from django.core.management.base import BaseCommand
 from requests_html import AsyncHTMLSession, HTMLResponse, HTML
 from products.models import Product, Category, CarName, CarMake, ExchangeRates
+import datetime
 
 url_page = "https://m.gparts.co.kr/display/showSearchDisplayList.mo?searchKeyword=&keyword=&producers_cd=&model_class_cd=&year_model=&part_cd=&maker=&carmodel=&model=&year=&part=&rowPage=10&sortType=A&idxNum=0&pageIdx="
 url_product = "https://m.gparts.co.kr/goods/viewGoodsInfo.mo?goodsCd="
@@ -30,14 +31,13 @@ def get_translate(text, dest="ru", src='ko', count=1):
     if text != "":
         try:
             return translator.translate(text, src=src, dest=dest).text
-        except BaseException as err:
-            print(err)
+        except BaseException as e:
+            print("get_translate", str(e))
             if count > 5:
                 print("get_translate вышло")
                 return None
             time.sleep(60)
             return get_translate(text, src=src, dest=dest, count=count + 1)
-
     return ""
 
 
@@ -47,8 +47,8 @@ def get_translate_list(list_text, dest="ru", src='ko', count=1):
         for trans in translator.translate(list_text, src=src, dest=dest):
             trans_result.append(trans.text)
         return trans_result
-    except BaseException as err:
-        print(err)
+    except BaseException as e:
+        print("get_translate_list", str(e))
         if count > 5:
             print("get_translate вышло")
             return None
@@ -104,7 +104,7 @@ async def parse_page(asession: AsyncHTMLSession, product_id: int, product_price:
         await product.asave()
 
     except BaseException as e:
-        print("product_error", e)
+        print("product_error", str(e))
 
 
 async def parse_pages(asession: AsyncHTMLSession, page=1):
@@ -126,7 +126,7 @@ async def parse_pages(asession: AsyncHTMLSession, page=1):
                 products_job.append(parse_page(asession, product_id, float(product_price)))
             else:
                 product.deleted = False
-                product.asave()
+                await product.asave()
 
         if len(products_job) > 0:
             await asyncio.gather(*products_job)
@@ -134,7 +134,7 @@ async def parse_pages(asession: AsyncHTMLSession, page=1):
         image = html.find("div.page_navi a:last img", first=True).attrs["src"]
         return image == "/images/board/next_more_btn.png"
     except BaseException as e:
-        print("page_error", e)
+        print("page_error", str(e))
 
 
 async def main(start_page):
@@ -145,8 +145,12 @@ async def main(start_page):
     start_time = time.time()
 
     while False not in out:
-        await asyncio.gather(*[parse_pages(asession, i) for i in range(start, start + step)])
-        start = start + step
+        try:
+            print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+            await asyncio.gather(*[parse_pages(asession, i) for i in range(start, start + step)])
+            start = start + step
+        except BaseException as e:
+            print("page_error", str(e))
     print(time.time() - start_time)
 
 
