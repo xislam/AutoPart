@@ -151,7 +151,7 @@ async def main(start_page):
         try:
             print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
             task = asyncio.create_task(parse_pages(asession, start))
-            done, pending = await asyncio.wait([task], timeout=1)
+            done, pending = await asyncio.wait([task], timeout=500)
             if len(done) > 0:
                 out = task.result()
             else:
