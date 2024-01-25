@@ -104,7 +104,7 @@ async def parse_page(asession: AsyncHTMLSession, product_id: int, product_price:
         await product.asave()
 
     except BaseException as e:
-        print("product_error", str(e))
+        print("parse_page", str(e))
 
 
 async def parse_pages(asession: AsyncHTMLSession, page=1):
@@ -134,7 +134,8 @@ async def parse_pages(asession: AsyncHTMLSession, page=1):
         image = html.find("div.page_navi a:last img", first=True).attrs["src"]
         return image == "/images/board/next_more_btn.png"
     except BaseException as e:
-        print("page_error", str(e))
+        return None
+        print("parse_pages", str(e))
 
 
 async def main(start_page):
@@ -147,10 +148,13 @@ async def main(start_page):
     while False not in out:
         try:
             print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-            await asyncio.gather(*[parse_pages(asession, i) for i in range(start, start + step)])
+            out = await asyncio.gather(*[parse_pages(asession, i) for i in range(start, start + step)])
+            if None in out:
+                time.sleep(150)
+                continue
             start = start + step
         except BaseException as e:
-            print("page_error", str(e))
+            print("parse_pages", str(e))
     print(time.time() - start_time)
 
 
