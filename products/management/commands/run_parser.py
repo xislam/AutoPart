@@ -7,7 +7,7 @@ from requests_html import AsyncHTMLSession, HTMLResponse, HTML
 from products.models import Product, Category, CarName, CarMake, ExchangeRates
 import datetime
 
-url_page = "https://m.gparts.co.kr/display/showSearchDisplayList.mo?searchKeyword=&keyword=&producers_cd=&model_class_cd=&year_model=&part_cd=&maker=&carmodel=&model=&year=&part=&rowPage=10&sortType=A&idxNum=0&pageIdx="
+url_page = "https://m.gparts.co.kr/display/showSearchDisplayList.mo?searchKeyword=&keyword=&producers_cd=&model_class_cd=&year_model=&part_cd=&maker=&carmodel=&model=&year=&part=&rowPage=100&sortType=A&idxNum=0&pageIdx="
 url_product = "https://m.gparts.co.kr/goods/viewGoodsInfo.mo?goodsCd="
 
 translator = googletrans.Translator()
@@ -123,38 +123,47 @@ async def parse_pages(asession: AsyncHTMLSession, page=1):
             product_price = product_price.replace("원", "").replace(",", "").replace(" ", "")
             product = await Product.objects.filter(product_id=product_id).afirst()
             if product is None:
-                products_job.append(parse_page(asession, product_id, float(product_price)))
+                products_job.append(asyncio.create_task(parse_page(asession, product_id, float(product_price))))
             else:
                 product.deleted = False
                 await product.asave()
 
         if len(products_job) > 0:
-            await asyncio.gather(*products_job)
+            done, pending = await asyncio.wait(products_job, timeout=400)
+            for task in pending:
+                print("cancelling task", task)
+                task.cancel()
 
         image = html.find("div.page_navi a:last img", first=True).attrs["src"]
         return image == "/images/board/next_more_btn.png"
     except BaseException as e:
-        return None
         print("parse_pages", str(e))
+        return None
 
 
 async def main(start_page):
     asession = AsyncHTMLSession(loop=asyncio.get_running_loop())
-    out = []
+    out = True
     start = start_page
-    step = 5
     start_time = time.time()
 
-    while False not in out:
+    while False is not out:
         try:
             print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-            out = await asyncio.gather(*[parse_pages(asession, i) for i in range(start, start + step)])
-            if None in out:
-                time.sleep(150)
+            task = asyncio.create_task(parse_pages(asession, start))
+            done, pending = await asyncio.wait([task], timeout=1)
+            if len(done) > 0:
+                out = task.result()
+            else:
+                task.cancel()
                 continue
-            start = start + step
+            out = True
+            if None is out:
+                time.sleep(500)
+                continue
+            start += 1
         except BaseException as e:
-            print("parse_pages", str(e))
+            print("main", str(e))
     print(time.time() - start_time)
 
 
