@@ -22,6 +22,7 @@ class OrderAdmin(admin.ModelAdmin):
     date_hierarchy = 'create_date'
     ordering = ('-create_date',)
     inlines = [ProductInline]
+    exclude = ('product',)
 
 
 admin.site.register(Order, OrderAdmin)
