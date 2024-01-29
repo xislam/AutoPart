@@ -11,7 +11,7 @@ class ProductInline(admin.TabularInline):
     verbose_name_plural = 'Products'
     verbose_name = 'Product'
     extra = 1
-
+    autocomplete_fields = ('product',)
     template = 'admin/product_change_form.html'
 
 
