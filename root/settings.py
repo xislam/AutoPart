@@ -34,8 +34,6 @@ ALLOWED_HOSTS = ['*', '195.49.210.86', 'seoulgarage.com']
 
 INSTALLED_APPS = [
     'jazzmin',
-    'dal',
-    'dal_select2',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
