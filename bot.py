@@ -45,7 +45,7 @@ def send_message_to_all_users(message_text):
 def send_order_notification(order):
     # Get order information
     order_info = f"New order: ID {order.id} \n\n"
-    order_info += f"User: {order.user.name} {order.user.surname} \n"
+    order_info += f"User: {order.name} {order.surname} \n"
     order_info += "Products:\n"
     for item in order.product.all():
         order_info += f"{item.name_product} .\n"  # Используем атрибут 'name' из модели Product

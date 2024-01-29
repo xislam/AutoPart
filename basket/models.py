@@ -25,9 +25,10 @@ class Order(models.Model):
     additional_address = models.CharField(max_length=120, verbose_name='Дополнительный адрес', null=True, blank=True)
     city = models.CharField(max_length=125, verbose_name='Город')
     phone = models.CharField(max_length=21, verbose_name='Номер телефона')
-    product = models.ManyToManyField(Product, verbose_name='Продукты')
     total = models.DecimalField(max_digits=8, decimal_places=2, verbose_name='Сумма')
     status = models.CharField(max_length=45, verbose_name='Статус', choices=STATUS_CHOICES, default='ожидание')
+    product = models.ManyToManyField(Product,
+                                      verbose_name='Товары', related_name='orders')
     create_date = models.DateTimeField(auto_now_add=True, verbose_name='Создания')
 
     def __str__(self):

@@ -77,7 +77,7 @@ class Product(models.Model):
     deleted = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'{self.name_product} '
+        return f'код продукта {self.code_product}'
 
     class Meta:
         verbose_name = 'Продукт'

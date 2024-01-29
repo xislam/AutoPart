@@ -1,9 +1,7 @@
 from django import forms
 from django.contrib import admin
 
-# Register your models here.
 from basket.models import Order
-from products.models import Product
 
 
 class ProductInline(admin.TabularInline):
@@ -11,18 +9,14 @@ class ProductInline(admin.TabularInline):
     verbose_name_plural = 'Products'
     verbose_name = 'Product'
     extra = 1
+    autocomplete_fields = ('product',)
 
     template = 'admin/product_change_form.html'
 
 
+@admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'surname', 'status', 'create_date')
+    list_display = ('name', 'surname', 'status', 'create_date')
     list_filter = ('status', 'create_date')
-    search_fields = ('name', 'surname', 'phone', 'status')
-    date_hierarchy = 'create_date'
-    ordering = ('-create_date',)
+    search_fields = ('name', 'surname', 'address', 'city', 'phone')
     inlines = [ProductInline]
-    exclude = ('product',)
-
-
-admin.site.register(Order, OrderAdmin)

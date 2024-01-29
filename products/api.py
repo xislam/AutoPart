@@ -63,9 +63,7 @@ class ProductsFilter(django_filters.FilterSet):
 
 
 class ProductListView(generics.ListAPIView):
-    queryset = Product.objects.exclude(
-        id__in=Subquery(Order.objects.filter(product=OuterRef('id')).values('product'))
-    )
+    queryset = Product.objects.all()
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = ProductFilter
@@ -124,10 +122,7 @@ class ProductDetailView(RetrieveAPIView):
 
 
 class ProductSearchView(generics.ListAPIView):
-    queryset = Product.objects.exclude(
-        id__in=Subquery(Order.objects.filter(product=OuterRef('id')).values('product'))
-    )
-
+    queryset = Product.objects.all()
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = ProductsFilter

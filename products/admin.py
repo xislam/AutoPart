@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
+from django.contrib.admin import SimpleListFilter
 from rangefilter.filters import DateRangeFilter
 
 from products.models import CarName, CarMake, Product, ExchangeRates, Category
@@ -42,18 +43,40 @@ class IntegerRangeFilter(admin.SimpleListFilter):
             return queryset.filter(model_year__range=(start_year, end_year))
 
 
+class PriceRangeFilter(SimpleListFilter):
+    title = 'Price Range'
+    parameter_name = 'price_range'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('low', 'Low Price'),
+            ('medium', 'Medium Price'),
+            ('high', 'High Price'),
+        )
+
+    def queryset(self, request, queryset):
+        if self.value() == 'low':
+            return queryset.filter(old_price__lt=100)  # Например, здесь вы можете указать свой диапазон цен
+        elif self.value() == 'medium':
+            return queryset.filter(old_price__gte=100, old_price__lte=500)
+        elif self.value() == 'high':
+            return queryset.filter(old_price__gt=500)
+
+
+@admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = (
         'name_product', 'car_info', 'model_year', 'detail_number', 'v_i_n', 'code_product', 'external_color',
         'old_price',
         'new_price')
     list_filter = (
-        IntegerRangeFilter, 'car_info', 'detail_number', 'v_i_n', 'code_product', 'external_color', 'old_price',
-        'new_price')
-    search_fields = ('car_info', 'detail_number', 'v_i_n', 'code_product', 'external_color', 'old_price',
-                     'new_price')
+        'car_info', 'detail_number', 'v_i_n', 'code_product', 'external_color', 'old_price',
+        'new_price', PriceRangeFilter)
+    search_fields = ('code_product',)
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related('car_info').order_by('name_product')
 
 
-admin.site.register(Product, ProductAdmin)
 admin.site.register(ExchangeRates)
 admin.site.register(Category)
