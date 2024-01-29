@@ -1,7 +1,9 @@
 from django import forms
 from django.contrib import admin
 
+# Register your models here.
 from basket.models import Order
+from products.models import Product
 
 
 class ProductInline(admin.TabularInline):
@@ -20,3 +22,4 @@ class OrderAdmin(admin.ModelAdmin):
     list_filter = ('status', 'create_date')
     search_fields = ('name', 'surname', 'address', 'city', 'phone')
     inlines = [ProductInline]
+
