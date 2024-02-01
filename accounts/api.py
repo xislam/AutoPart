@@ -56,6 +56,8 @@ class UserLoginAPIView(generics.CreateAPIView):
                 'refresh_token': str(refresh),
                 'user_id': user.id,
                 'username': user.email,
+                'is_superuser': user.is_superuser,
+
                 # Add other user-related fields as needed
             }
 
