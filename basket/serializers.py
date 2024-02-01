@@ -3,6 +3,7 @@ from rest_framework import serializers
 
 from basket.models import Order
 from products.models import Product
+from products.serializers import ProductSerializer
 
 
 class OrderSerializer(serializers.ModelSerializer):
@@ -31,6 +32,8 @@ class OrderListSerializer(serializers.ModelSerializer):
 
 
 class OrderAdminSerializer(serializers.ModelSerializer):
+    product = ProductSerializer(many=True)
+
     class Meta:
         model = Order
         fields = '__all__'
