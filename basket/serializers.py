@@ -28,3 +28,9 @@ class OrderListSerializer(serializers.ModelSerializer):
 
     def get_products(self, obj):
         return ', '.join([product.name_product for product in obj.product.all()])
+
+
+class OrderAdminSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = '__all__'
