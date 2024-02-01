@@ -37,3 +37,11 @@ class OrderAdminSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = '__all__'
+
+    def update(self, instance, validated_data):
+        # Обновление связанных продуктов заказа
+        product_data = validated_data.pop('product', None)
+        if product_data:
+            for product in product_data:
+                instance.product.add(product)
+        return super().update(instance, validated_data)
