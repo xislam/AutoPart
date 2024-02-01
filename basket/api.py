@@ -4,6 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from basket.models import Order
 from basket.serializers import OrderSerializer, OrderListSerializer, OrderAdminSerializer
+from products.api import CustomPageNumberPagination
 
 
 class OrderCreateView(generics.CreateAPIView):
@@ -22,6 +23,7 @@ class OrderListView(generics.ListAPIView):
     serializer_class = OrderListSerializer
     permission_classes = [IsAuthenticated]
 
+
     def get_queryset(self):
         # Retrieve orders only for the authenticated user
         return Order.objects.filter(user=self.request.user)
@@ -36,6 +38,7 @@ class OrderListCreateView(generics.ListCreateAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderAdminSerializer
     permission_classes = [permissions.IsAuthenticated, IsSuperAdmin]
+    pagination_class = CustomPageNumberPagination
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
