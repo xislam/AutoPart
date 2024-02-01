@@ -3,7 +3,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 from basket.models import Order
-from basket.serializers import OrderSerializer, OrderListSerializer
+from basket.serializers import OrderSerializer, OrderListSerializer, OrderAdminSerializer
 
 
 class OrderCreateView(generics.CreateAPIView):
@@ -34,7 +34,7 @@ class IsSuperAdmin(permissions.BasePermission):
 
 class OrderListCreateView(generics.ListCreateAPIView):
     queryset = Order.objects.all()
-    serializer_class = OrderSerializer
+    serializer_class = OrderAdminSerializer
     permission_classes = [permissions.IsAuthenticated, IsSuperAdmin]
 
     def perform_create(self, serializer):
@@ -43,5 +43,5 @@ class OrderListCreateView(generics.ListCreateAPIView):
 
 class OrderRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Order.objects.all()
-    serializer_class = OrderSerializer
+    serializer_class = OrderAdminSerializer
     permission_classes = [permissions.IsAuthenticated, IsSuperAdmin]
