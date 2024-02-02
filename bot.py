@@ -1,15 +1,17 @@
 import os
-
 from telegram.ext import Updater, CommandHandler, CallbackContext
 from telegram import Update, Bot
 from django import setup
+from django.conf import settings  # Import settings module
 
-# Задайте переменную окружения DJANGO_SETTINGS_MODULE
+# Set the DJANGO_SETTINGS_MODULE environment variable
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'root.settings')
+# Call the setup() function to configure Django
 
-# Вызовите функцию setup() для настройки Django
-setup()
-# Замените 'YOUR_TOKEN' на фактический токен вашего бота
+
+# Check if Django is configured and configure it if not
+if not settings.configured:
+    settings.configure()
 
 from accounts.models import ChatId
 
@@ -62,16 +64,16 @@ def main():
     updater = Updater(token=TOKEN, use_context=True)
     dp = updater.dispatcher
 
-    # Обработка команды /start
+    # Handle the /start command
     dp.add_handler(CommandHandler("start", start))
 
-    # Обработка команды /get_chat_id
+    # Handle the /get_chat_id command
     dp.add_handler(CommandHandler("get_chat_id", get_chat_id))
 
-    # Запуск бота
+    # Start the bot
     updater.start_polling()
 
-    # Остановка бота при нажатии Ctrl+C
+    # Stop the bot on Ctrl+C
     updater.idle()
 
 
