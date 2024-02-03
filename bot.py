@@ -13,7 +13,7 @@ setup()
 # Замените 'YOUR_TOKEN' на фактический токен вашего бота
 from accounts.models import ChatId
 
-TOKEN = '6479146986:AAF-PEs-K7Wl9kYnwoxWWkGKPrcQdVaErBY'
+TOKEN = '6855005075:AAEQbNP8rnCBtWunhd73Dglt2uZb5lzVCrw'
 
 
 def start(update: Update, context: CallbackContext):
