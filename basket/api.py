@@ -14,12 +14,22 @@ class OrderCreateView(generics.CreateAPIView):
     serializer_class = OrderSerializer
 
     def perform_create(self, serializer):
-        # Get the authenticated user if available, otherwise None
-        user = self.request.user if self.request.user.is_authenticated else None
+        # Сначала сохраняем заказ
+        order = serializer.save(user=self.request.user if self.request.user.is_authenticated else None)
 
-        # Save the order with the determined user
-        serializer.save(user=user)
+        # Формируем текст уведомления
+        order_info = f"New order: ID {order.id}\n"
+        order_info += f"User: {order.name} {order.surname}\n"
+        order_info += f"Phone: {order.phone}\n"
+        order_info += "Products:\n"
+        for product in order.product.all():
+            order_info += f"  - {product.name}: {product.code}\n"
+        order_info += f"Total: {order.total} $\n"
+        order_info += f"Status: {order.status}\n"
+        order_info += f"Created: {order.create_date}\n"
 
+        # Отправляем уведомление в Telegram
+        send_message_to_all_users(order_info)
 
 class OrderListView(generics.ListAPIView):
     serializer_class = OrderListSerializer
@@ -45,7 +55,7 @@ class OrderListCreateView(generics.ListCreateAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         order = serializer.save(user=request.user)
-
+        print('sdfsdfasd asdf asdf asdf asdf asdf')
         # Формируем текст уведомления
         order_info = f"New order: ID {order.id}\n"
         order_info += f"User: {order.name} {order.surname}\n"
