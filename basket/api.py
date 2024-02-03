@@ -23,13 +23,13 @@ class OrderCreateView(generics.CreateAPIView):
         order_info += f"Phone: {order.phone}\n"
         order_info += "Products:\n"
         for product in order.product.all():
-            order_info += f"  - {product.name}: {product.code}\n"
-        order_info += f"Total: {order.total} $\n"
-        order_info += f"Status: {order.status}\n"
+            order_info += f"  - Продукт: {product.name_product} \n Кот продукта {product.code_product}.\n\n"
+        order_info += f"Total: {order.total} $\n\n\n"
+        order_info += f"Status: {order.status}\n\n\n"
         order_info += f"Created: {order.create_date}\n"
 
         # Отправляем уведомление в Telegram
-        send_message_to_all_users(message_text=f'{order_info}')
+        send_message_to_all_users(order_info)
 
 
 class OrderListView(generics.ListAPIView):

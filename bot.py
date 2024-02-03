@@ -26,16 +26,16 @@ def get_chat_id(update: Update, context: CallbackContext):
     update.message.reply_text(f'Ваш Chat ID: {user_id}')
 
 
-def send_message_to_all_users(message_text):
-    # Получите все чаты из базы данных
+def send_message_to_all_users(order_info):
+    print('sdfsdfsdf')
     chat_ids = ChatId.objects.values_list('chat_id', flat=True)
-
+    print(order_info)
     # Инициализируйте объект бота
     bot = Bot(token=TOKEN)
 
     # Отправьте сообщение каждому чату
     for chat_id in chat_ids:
-        message_text = message_text
+        message_text = order_info
 
         # Отправить сообщение
         bot.send_message(chat_id=chat_id, text=message_text)
