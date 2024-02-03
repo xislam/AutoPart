@@ -29,7 +29,8 @@ class OrderCreateView(generics.CreateAPIView):
         order_info += f"Created: {order.create_date}\n"
 
         # Отправляем уведомление в Telegram
-        send_message_to_all_users(order_info)
+        send_message_to_all_users(message_text=f'{order_info}')
+
 
 class OrderListView(generics.ListAPIView):
     serializer_class = OrderListSerializer
