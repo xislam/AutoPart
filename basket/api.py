@@ -41,28 +41,27 @@ class OrderListCreateView(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated, IsSuperAdmin]
     pagination_class = CustomPageNumberPagination
 
-    def perform_create(self, serializer):
-        # Сначала сохраняем заказ
-        order = serializer.save(user=self.request.user)
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        order = serializer.save(user=request.user)
 
-        # Проверяем, что метод запроса - POST
-        if self.request.method == 'POST':
-            # После сохранения заказа формируем текст уведомления
-            order_info = f"New order: ID {order.id}\n"
-            order_info += f"User: {order.name} {order.surname}\n"
-            order_info += f"Phone: {order.phone}\n"
-            order_info += "Products:\n"
-            for product in order.product.all():
-                order_info += f"  - {product.name}: {product.code}\n"
-            order_info += f"Total: {order.total} $\n"
-            order_info += f"Status: {order.status}\n"
-            order_info += f"Created: {order.create_date}\n"
+        # Формируем текст уведомления
+        order_info = f"New order: ID {order.id}\n"
+        order_info += f"User: {order.name} {order.surname}\n"
+        order_info += f"Phone: {order.phone}\n"
+        order_info += "Products:\n"
+        for product in order.product.all():
+            order_info += f"  - {product.name}: {product.code}\n"
+        order_info += f"Total: {order.total} $\n"
+        order_info += f"Status: {order.status}\n"
+        order_info += f"Created: {order.create_date}\n"
 
-            # Отправляем уведомление в Telegram
-            send_message_to_all_users(order_info)
+        # Отправляем уведомление в Telegram
+        send_message_to_all_users(order_info)
 
-        # Возвращаем успешный ответ
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
 class OrderRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
