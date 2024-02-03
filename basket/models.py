@@ -40,6 +40,6 @@ class Order(models.Model):
 
 
 @receiver(post_save, sender=Order)
-def order_post_save(sender, instance, **kwargs):
-    print(instance)
-    send_order_notification(instance)
+def order_post_save(sender, instance, created, **kwargs):
+    if created:  # Проверка, был ли заказ только что создан
+        send_order_notification(instance)
