@@ -424,6 +424,35 @@
             })
         })
     });
+    document.addEventListener('DOMContentLoaded', function () {
+    function getSecureCookie(name) {
+    var nameEQ = name + '=';
+    var cookies = document.cookie.split(';');
+
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i];
+
+        while (cookie.charAt(0) === ' ') {
+            cookie = cookie.substring(1, cookie.length);
+        }
+
+        if (cookie.indexOf(nameEQ) === 0) {
+            return decodeURIComponent(cookie.substring(nameEQ.length, cookie.length));
+        }
+    }
+
+    return null;
+}
+    var username = getSecureCookie('userData');
+    let user = JSON.parse(username);
+
+    if (user.is_superuser) {
+        document.getElementById("adminPage").classList.remove("hidden")
+        document.getElementById("adminPage1").classList.remove("hidden")
+    } else {
+        document.getElementById("adminPage").classList.add("hidden")
+        document.getElementById("adminPage1").classList.add("hidden")
+    }});
 </script>
 </body>
 </html>

@@ -95,13 +95,7 @@ function getSecureCookie(name) {
 document.addEventListener('DOMContentLoaded', function () {
     var username = getSecureCookie('userData');
     let user = JSON.parse(username);
-    if (user.is_superuser) {
-        document.getElementById("adminPage").classList.remove("hidden")
-        document.getElementById("adminPage1").classList.remove("hidden")
-    } else {
-        document.getElementById("adminPage").classList.add("hidden")
-        document.getElementById("adminPage1").classList.add("hidden")
-    };
+
     if (user) {
         document.getElementById("profile").classList.remove("hidden")
         document.getElementById("sign2").classList.add("hidden")
