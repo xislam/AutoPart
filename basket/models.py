@@ -39,6 +39,4 @@ class Order(models.Model):
         verbose_name = 'Заказы'
 
 
-@receiver(post_save, sender=Order)
-def order_post_save(sender, instance, **kwargs):
-    send_order_notification(instance)
+

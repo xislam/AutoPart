@@ -1,9 +1,11 @@
 from rest_framework import generics, permissions
 from rest_framework.authentication import TokenAuthentication
+from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated
 
 from basket.models import Order
 from basket.serializers import OrderSerializer, OrderListSerializer, OrderAdminSerializer
+from bot import send_order_notification
 from products.api import CustomPageNumberPagination
 
 
@@ -23,7 +25,6 @@ class OrderListView(generics.ListAPIView):
     serializer_class = OrderListSerializer
     permission_classes = [IsAuthenticated]
 
-
     def get_queryset(self):
         # Retrieve orders only for the authenticated user
         return Order.objects.filter(user=self.request.user)
@@ -41,7 +42,12 @@ class OrderListCreateView(generics.ListCreateAPIView):
     pagination_class = CustomPageNumberPagination
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        try:
+            serializer.save(user=self.request.user)
+            send_order_notification(serializer)
+        except ValidationError as e:
+            # Handle validation errors if any
+            pass
 
 
 class OrderRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):

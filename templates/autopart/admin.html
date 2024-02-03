@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css"  rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'styles/style.css' %}">
+    <title>Автозапчасти из Кореи</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .cardShadow{
+            -webkit-box-shadow: 0px 0px 38px -28px rgba(0,0,0,0.75);
+            -moz-box-shadow: 0px 0px 38px -28px rgba(0,0,0,0.75);
+            box-shadow: 0px 0px 38px -28px rgba(0,0,0,0.75);
+        }
+        .cardShadow:hover{
+            -webkit-box-shadow: 0px 0px 38px -18px rgba(0,0,0,0.75);
+            -moz-box-shadow: 0px 0px 38px -18px rgba(0,0,0,0.75);
+            box-shadow: 0px 0px 38px -18px rgba(0,0,0,0.75);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header start -->
+    <header id="header" class="hidden">
+        <!-- Topbar start -->
+        <div class="h-[80px] overflow-hidden sm:h-[76px] w-full flex px-4 sm:px-10 lg:px-[108px] justify-between items-center shadow-md">
+            <!-- burger -->
+            <a href="{% url 'index' %}">
+                <img class="w-[127px] h-[117px]" src="{% static 'images/logo.svg' %}" alt="logo">
+            </a>
+            <div class="flex items-center gap-3">
+                <div id="profile" class="bg-[#F6F9FF] rounded-full p-2 cursor-pointer  relative">
+                    <svg width="32px" height="29px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="6" r="4" fill="#1C274C"/>
+                        <ellipse cx="12" cy="17" rx="7" ry="4" fill="#1C274C"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <!-- Topbar end -->
+    </header>
+    <section id="content" class="containers py-10 hidden">
+        <div class="flex flex-col gap-5">
+            <div class="flex flex-col gap-2">
+                <p class="text-[#043E44] text-sm">Админ панель / заказы</p>
+                <div class="flex justify-between items-center">
+                    <h2 class="text-3xl font-medium">Заказы</h2>
+                    <span class="text-[#043E44] text-sm">Количество заказов <span id="counters" class="font-bold"></span></span>
+                </div>
+            </div>
+            <div id="products" class="flex flex-col w-full h-[700px] sm:h-[450px] overflow-y-scroll px-4 gap-5 py-4">
+                
+            </div>
+        </div>
+    </section>
+    <section id="error404" class="flex items-center justify-center w-full h-full py-20 sm:py-36">
+        <div class="flex flex-col items-center gap-4">
+            <img src="{% static 'images/404.svg' %}" class="w-[320px] h-[320px]" alt="404 error">
+            <p class="text-black/50">Страница не найдена</p>
+            <a href="{% url 'index' %}" class="px-7 text-center rounded-md py-3 text-lg text-white  font-bold bg-[#0052cc]">Вернуться на главную</a>
+        </div>
+    </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+    <script src="{% static 'scripts/admin.js' %}"></script>
+</body>
+</html>
