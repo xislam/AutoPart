@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 <span class="text-xl font-medium">${element.total}$</span>
                             </div>
                         </div>
-                        <a href="/api/admin_page/?id=${element.id}" class="font-medium bg-[#C9C9C9] px-4 py-1 rounded-md text-center hover:bg-[#0052cc] hover:text-white">Посмотреть заказ</a>
+                        <a href="/api/admin_page?id=${element.id}" class="font-medium bg-[#C9C9C9] px-4 py-1 rounded-md text-center hover:bg-[#0052cc] hover:text-white">Посмотреть заказ</a>
                     </div>
                 `;
                 products.appendChild(div);
