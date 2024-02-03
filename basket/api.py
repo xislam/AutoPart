@@ -1,11 +1,11 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, status
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
 from basket.models import Order
 from basket.serializers import OrderSerializer, OrderListSerializer, OrderAdminSerializer
-from bot import send_order_notification
+from bot import send_message_to_all_users
 from products.api import CustomPageNumberPagination
 
 
@@ -42,12 +42,27 @@ class OrderListCreateView(generics.ListCreateAPIView):
     pagination_class = CustomPageNumberPagination
 
     def perform_create(self, serializer):
-        try:
-            serializer.save(user=self.request.user)
-            send_order_notification(serializer)
-        except ValidationError as e:
-            # Handle validation errors if any
-            pass
+        # Сначала сохраняем заказ
+        order = serializer.save(user=self.request.user)
+
+        # Проверяем, что метод запроса - POST
+        if self.request.method == 'POST':
+            # После сохранения заказа формируем текст уведомления
+            order_info = f"New order: ID {order.id}\n"
+            order_info += f"User: {order.name} {order.surname}\n"
+            order_info += f"Phone: {order.phone}\n"
+            order_info += "Products:\n"
+            for product in order.product.all():
+                order_info += f"  - {product.name}: {product.code}\n"
+            order_info += f"Total: {order.total} $\n"
+            order_info += f"Status: {order.status}\n"
+            order_info += f"Created: {order.create_date}\n"
+
+            # Отправляем уведомление в Telegram
+            send_message_to_all_users(order_info)
+
+        # Возвращаем успешный ответ
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class OrderRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):

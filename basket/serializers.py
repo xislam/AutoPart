@@ -38,6 +38,7 @@ class OrderAdminSerializer(serializers.ModelSerializer):
         model = Order
         fields = '__all__'
 
+
     def update(self, instance, validated_data):
         # Обновление связанных продуктов заказа
         product_data = validated_data.pop('product', None)

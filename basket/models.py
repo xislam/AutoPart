@@ -5,7 +5,6 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from accounts.models import User
-from bot import send_order_notification
 from products.models import Product
 
 
@@ -38,8 +37,3 @@ class Order(models.Model):
         verbose_name_plural = 'Заказы'
         verbose_name = 'Заказы'
 
-
-@receiver(post_save, sender=Order)
-def order_post_save(sender, instance, created, **kwargs):
-    if created:  # Проверка, был ли заказ только что создан
-        send_order_notification(instance)
