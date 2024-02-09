@@ -70,17 +70,18 @@ function handleData() {
                 const div = document.createElement("div");
                 div.classList = "w-full flex gap-6 shadow-md rounded-md flex-col sm:flex-row p-3 sm:h-[180px]";
                 div.innerHTML = `
-                    <a href="/detail.html?id=${item.id}" id="twoPhoto">
+                    <a href="/api/detail/?id=${item.id}" id="twoPhoto">
                         <img src=${item.fotos[0]} id="productImg" class="w-full rounded-md hover:opacity-80 sm:w-[220px] h-[350px] sm:h-[150px] object-cover cursor-pointer" alt="img">
                     </a>
                     <div class="flex flex-col gap-4 relative h-full pb-12 w-full">
                         <h2 class="text-lg font-semibold">${item.name_product}</h2>
                         <p class="text-sm text-[#313141]">${item.product_information.split("").slice(0, 40).join("")}</p>
+                        <p class="text-sm text-[#313141]">Код продукта: ${item.code_product}</p>
                         <div class="flex items-center justify-between w-full absolute bottom-2">
                             <span class="text-[#F11313] font-bold text-xl">${item.new_price ? item.new_price : item.old_price}$</span>
                             <span class="text-[#7A859E] line-through ${item.new_price ? "" : "hidden"}">${item.old_price}$</span>
                         </div>
-                        <a href="/detail.html?id=${item.id}" class="px-7 text-center rounded-md py-1 text-white font-medium bg-[#0052cc] absolute bottom-3 right-3">Посмотреть</a>
+                        <a href="/api/detail/?id=${item.id}" class="px-7 text-center rounded-md py-1 text-white font-medium bg-[#0052cc] absolute bottom-3 right-3">Посмотреть</a>
                     </div>
                 `;
                 document.getElementById("placeProd").appendChild(div);
@@ -149,6 +150,6 @@ document.getElementById("delete_btn").addEventListener("click", () => {
         .catch(error => {
             console.error('Произошла ошибка:', error);
         })
-        .finally(() => window.location.href = '/admin.html')
+        .finally(() => window.location.href = '/api/admin_order')
 
 })

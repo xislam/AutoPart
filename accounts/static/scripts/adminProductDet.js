@@ -76,6 +76,7 @@ function handleData() {
                     <div class="flex flex-col gap-4 relative h-full pb-12 w-full">
                         <h2 class="text-lg font-semibold">${item.name_product}</h2>
                         <p class="text-sm text-[#313141]">${item.product_information.split("").slice(0, 40).join("")}</p>
+                        <p class="text-sm text-[#313141]">Код продукта: ${item.code_product}</p>
                         <div class="flex items-center justify-between w-full absolute bottom-2">
                             <span class="text-[#F11313] font-bold text-xl">${item.new_price ? item.new_price : item.old_price}$</span>
                             <span class="text-[#7A859E] line-through ${item.new_price ? "" : "hidden"}">${item.old_price}$</span>
