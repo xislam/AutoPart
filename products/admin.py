@@ -73,7 +73,7 @@ class ProductAdmin(admin.ModelAdmin):
         'car_info', 'detail_number', 'v_i_n', 'code_product', 'external_color', 'old_price',
         'new_price', PriceRangeFilter)
     list_per_page = 50
-    autocomplete_fields = ['car_info']
+    autocomplete_fields = ['car_info', 'category']
     search_fields = ('code_product',)
 
     def get_queryset(self, request):
