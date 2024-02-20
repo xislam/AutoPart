@@ -69,9 +69,9 @@ class ProductAdmin(admin.ModelAdmin):
         'name_product', 'model_year', 'detail_number', 'v_i_n', 'code_product', 'external_color',
         'old_price',
         'new_price')
-    list_filter = (
-        'car_info', 'detail_number', 'v_i_n', 'code_product', 'external_color', 'old_price',
-        'new_price', PriceRangeFilter)
+    # list_filter = (
+    #     'car_info', 'detail_number', 'v_i_n', 'code_product', 'external_color', 'old_price',
+    #     'new_price', PriceRangeFilter)
     list_per_page = 50
     autocomplete_fields = ['car_info', 'category']
     search_fields = ('code_product',)
