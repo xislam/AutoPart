@@ -66,7 +66,7 @@ class PriceRangeFilter(SimpleListFilter):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = (
-        'name_product', 'car_info', 'model_year', 'detail_number', 'v_i_n', 'code_product', 'external_color',
+        'name_product', 'model_year', 'detail_number', 'v_i_n', 'code_product', 'external_color',
         'old_price',
         'new_price')
     list_filter = (
